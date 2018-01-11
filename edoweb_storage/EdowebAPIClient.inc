@@ -287,6 +287,16 @@ class EdowebAPIClient implements EdowebAPIClientInterface {
     );
     return $this->_http_delete($http_url);
   }
+  
+  public function activate($entity) {
+      $http_url = sprintf(
+          '%s/resource/%s/activate',
+          $this->__edoweb_api_host,
+          $entity->remote_id
+          );
+      drupal_set_message($http_url);
+     return $this->_http_post($http_url);
+  }
 
   public function index($entity) {
     // Index resource
@@ -400,6 +410,15 @@ class EdowebAPIClient implements EdowebAPIClientInterface {
   	 	      $http_response = $this->_http_get($http_url, 'text/html');
   	 	      return $http_response->data;
   }
+  
+  public function getBrowsingPage($facetName){
+        $http_url=sprintf('%s/browse/%s?design=frl',
+            $this->__edoweb_api_host,
+            $facetName);
+        $http_response = $this->_http_get($http_url,'text/html');
+        return $http_response->data;
+  }
+  
   protected function _query_lobid(EntityFieldQuery $efq, $page = 0) {
     $lobid_host = variable_get('edoweb_lobid_host');
     $term = str_replace(
@@ -511,8 +530,8 @@ class EdowebAPIClient implements EdowebAPIClientInterface {
   protected function _query_elasticsearch(EntityFieldQuery $efq, $page = 0) {
 
     $index = user_access('edit any edoweb_basic entity')
-      ? variable_get('edoweb_api_namespace')
-      : 'public_' . variable_get('edoweb_api_namespace');
+      ? variable_get('edoweb_api_namespace').'2'
+      : 'public_' . variable_get('edoweb_api_namespace').'2';
 
     if (isset($efq->tags['fulltext'])) {
       $index .= ',fulltext_' . variable_get('edoweb_api_namespace');

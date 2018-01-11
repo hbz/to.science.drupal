@@ -439,7 +439,7 @@ function edoweb_menu() {
     'access arguments' => array('view any edoweb_basic entity'),
     'type' => MENU_CALLBACK
   );
-
+  
   // Add new resources
   $items['resource/add/%'] = array(
     'title callback' => 'edoweb_basic_bundle_name',
@@ -613,11 +613,10 @@ function edoweb_repository_configuration_form() {
     '#type' => 'checkboxes',
     '#title' => t('Felder'),
     '#options' => array(
-      'field_edoweb_creator' => t('Autor'),
-      'field_edoweb_contributor' => t('Bearbeiter'),
+      'field_edoweb_contribution' => t('Beteiligung'),
       'field_edoweb_issued' => t('Erschienen'),
     ),
-    '#default_value' => variable_get('sub_title_fields', array('field_edoweb_creator')),
+    '#default_value' => variable_get('sub_title_fields', array('field_edoweb_contribution')),
   );
 
   $form['sub_title_config']['sub_title_field_separator'] = array(
@@ -636,13 +635,12 @@ function edoweb_repository_configuration_form() {
     '#type' => 'checkboxes',
     '#title' => t('Verfügbare Facetten'),
     '#options' => array(
-      'subject.@id' => t('Sacherschließung'),
-      'rpbSubject.@id' => t('RPB Erchließung'),
+      'subject.prefLabel' => t('Sacherschließung'),
       'contentType' => t('Objektart'),
       'rdftype.@id' => t('Typ'),
       'medium.@id' => t('Medium'),
       'issued' => t('Erscheinungsjahr'),
-'creator.@id' => t('Autor'),
+      'creator.@id' => t('Autor'),
       'institution.@id' => t('Institution'),
     ),
     '#default_value' => variable_get('available_facets', array('creator.@id')),
@@ -1042,6 +1040,7 @@ function _edoweb_entity_table_headers($init_sort = null) {
 					'type' => 'generated',
 					'format' => '_edoweb_link_lastmodified' 
 			),
+	   
 			'bundle_type' => array (
 					'data' => t ( 'Objektart' ),
 					'type' => 'property',
@@ -2529,6 +2528,12 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
       '#submit' => array('edoweb_basic_admin_delete'),
       '#weight' => 200,
     );
+    $form['actions']['activate'] = array(
+        '#type' => 'submit',
+        '#value' => t('Activate'),
+        '#submit' => array('edoweb_basic_admin_activate'),
+        '#weight' => 200,
+    );
     $form['transformers'] = array(
       '#type' => 'fieldset',
       '#title' => t('Transformers'),
@@ -2601,6 +2606,12 @@ function edoweb_basic_admin_delete( $form , &$form_state ) {
     }
   }
   $form_state['redirect'] = "resource/$parent_id";
+}
+
+function edoweb_basic_admin_activate( $form , &$form_state ) {
+    $entity = $form_state['values']['basic_entity'];
+    entity_get_controller('edoweb_basic')->activate($entity);
+    $form_state['redirect'] = 'resource/' . $entity->remote_id;
 }
 
 /**
@@ -2743,115 +2754,71 @@ function edoweb_basic_data($entity) {
 
 function edoweb_basic_browse($jsonld_property) {
 
-  $api = new EdowebApiClient();
-  $query = new EntityFieldQuery();
-  $query->addTag('elasticsearch');
-  $query->addMetaData('facet_size', 999);
-  $result = $query->execute();
+//   $api = new EdowebApiClient();
+//   $query = new EntityFieldQuery();
+  
+  
+  
+  $api = new EdowebAPIClient();
+  $htmlString=$api->getBrowsingPage($jsonld_property);
+  
+//   $query->addTag('elasticsearch');
+//   $query->addMetaData('facet_size', 999);
+//   $result = $query->execute();
 
-  if (!property_exists($result['facets'], $jsonld_property)) {
-    return drupal_not_found();
-  }
+//   if (!property_exists($result['facets'], $jsonld_property)) {
+//     return drupal_not_found();
+//   }
 
-  $is_ref = in_array($jsonld_property, array('creator', 'subject', 'institution', 'rdftype', 'medium'));
-  $is_user = ('createdBy' == $jsonld_property
-      || 'lastModifiedBy' == $jsonld_property);
-  $items = array();
-  foreach ($result['facets']->$jsonld_property->terms as $term) {
-    $facet_entity_uri = $term->term;
-    $facet_entity_count = $term->count;
-    if ($is_ref) {
-      $facet_object = es_facet_object($facet_entity_uri);
-      $title = $facet_entity_uri;//$facet_object['prefLabel'];
-      $facet_entity_uri = $facet_entity_uri;//$facet_object['@id'];
-    } else if ($is_user) {
-      $title = _edoweb_user_name($facet_entity_uri);
-    } else {
-      $title = _edoweb_map_string("$facet_entity_uri");
-    }
-    $params = array();
-    $params['query'][0]['facets'][$jsonld_property][] = $facet_entity_uri;
-    $apply_facet_link = l(
-      $title, '/resource/',
-      array(
-        'query' => $params,
-        'attributes' => array(),
-      )
-    ) . " <span>($facet_entity_count)</span>";
-    $items[] = array(
-      'data' => $apply_facet_link,
-    );
-  }
+//   $is_ref = in_array($jsonld_property, array('contribution', 'subject', 'institution', 'rdftype', 'medium'));
+//   $is_user = ('createdBy' == $jsonld_property
+//       || 'lastModifiedBy' == $jsonld_property);
+//   $items = array();
+//   foreach ($result['facets']->$jsonld_property->terms as $term) {
+//     $facet_entity_uri = $term->term;
+//     $facet_entity_count = $term->count;
+//     if ($is_ref) {
+//       $facet_object = es_facet_object($facet_entity_uri);
+//       $title = $facet_entity_uri;//$facet_object['prefLabel'];
+//       $facet_entity_uri = $facet_entity_uri;//$facet_object['@id'];
+//     } else if ($is_user) {
+//       $title = _edoweb_user_name($facet_entity_uri);
+//     } else {
+//       $title = _edoweb_map_string("$facet_entity_uri");
+//     }
+//     $params = array();
+//     $params['query'][0]['facets'][$jsonld_property][] = $facet_entity_uri;
+//     $apply_facet_link = l(
+//       $title, '/resource/',
+//       array(
+//         'query' => $params,
+//         'attributes' => array(),
+//       )
+//     ) . " <span>($facet_entity_count)</span>";
+//     $items[] = array(
+//       'data' => $apply_facet_link,
+//     );
+//   }
 
-  return theme_item_list(array(
-    'items' => $items,
+  return $htmlString;
+  /* theme_item_list(array(
+      'items' => ,
     'title' => _edoweb_map_string($jsonld_property),
     'type' => 'ul',
     'attributes' => array('class' => array('listnav')),
-  ));
+  ));*/
 
 }
 
 function edoweb_restricted_browse($inst_name, $jsonld_property = 'institution') {
 
-  $api = new EdowebApiClient();
-  $query = new EntityFieldQuery();
-  $query->addTag('elasticsearch');
-  $query->addMetaData('facet_size', 999);
-  $result = $query->execute();
-
-  if (!property_exists($result['facets'], $jsonld_property)) {
-    return drupal_not_found();
+    return edoweb_basic_browse;
+ 
   }
 
-  $is_ref = in_array($jsonld_property, array('creator', 'subject', 'institution', 'rdftype', 'medium'));
-  $is_user = ('createdBy' == $jsonld_property
-      || 'lastModifiedBy' == $jsonld_property);
-  $items = array();
-  foreach ($result['facets']->$jsonld_property->terms as $term) {
+ 
 
-    if( $term->term == $inst_name){
-
-    //drupal_set_message(var_dump($result['facets']->$jsonld_property));
-
-    $facet_entity_uri = $term->term;
-    $facet_entity_count = $term->count;
-    if ($is_ref) {
-      $facet_object = es_facet_object($facet_entity_uri);
-      $title = $facet_entity_uri;//$facet_object['prefLabel'];
-      $facet_entity_uri = $facet_entity_uri;//$facet_object['@id'];
-    } else if ($is_user) {
-      $title = _edoweb_user_name($facet_entity_uri);
-    } else {
-      $title = _edoweb_map_string("$facet_entity_uri");
-    }
-    $params = array();
-    $params['query'][0]['facets'][$jsonld_property][] = $facet_entity_uri;
-    $apply_facet_link = l(
-      $title, '/resource/',
-      array(
-        'query' => $params,
-        'attributes' => array(),
-      )
-    ) . " <span>($facet_entity_count)</span>";
-    $items[] = array(
-      'data' => $apply_facet_link,
-    );
-
-    };
-  }
-
-  return theme_item_list(array(
-    'items' => $items,
-    'title' => _edoweb_map_string($jsonld_property),
-    'type' => 'ul',
-    'attributes' => array('class' => array('listnav')),
-  ));
-
-}
-
-
-function es_facet_object($string) {
+function _no_use_es_facet_object($string) {
   $string = substr($string, 1, -1);
   $regex = '/(?<=\s|\A)([^\s=]+)=(.*?)(?=(?:\s[^\s=]+=|$))/';
 // $regex = '/(.*)=(.*)/';
@@ -3293,7 +3260,32 @@ function _edoweb_link_lastmodified($entity) {
 }
 
 function _edoweb_compact_view($entity) {
-  $entity_view = edoweb_basic_view($entity, 'compact');
+    global $base_url;
+    $page_url = $base_url . '/' . current_path();
+    $entity_type = 'edoweb_basic';
+    //edoweb_update_7181();
+    $wrapper = entity_metadata_wrapper('edoweb_basic', $entity);
+    
+    $attr_bundle = 'data-entity-bundle="' .  $entity->bundle_type . '"';
+    $attr_rdf_typeof = 'typeof="' . implode(' ', edoweb_rdf_types($entity->bundle_type)) . '"';
+    $attr_rdf_resource = isset($entity->remote_id)
+    ? 'resource="' . $entity->remote_id . '"'
+        : 'resource="[_:foo]"';
+        
+  $entity_view = array(
+      '#prefix' => "<div class=\"edoweb entity compact\" $attr_bundle $attr_rdf_resource $attr_rdf_typeof>"
+      . '<div class="compact-header">' . _full_title($entity->label(), $entity) . '</div>',
+      '#suffix' => "</div>",
+  );
+  
+  if (_is_edoweb_entity($entity)) {
+      $curie = _edoweb_compact_uri($entity->remote_id);
+      $href = "edoweb/title/$curie";
+      return l("HES",
+          $href, array('attributes' => array('class' => array('edoweb entity compact fullTitle')))
+          );
+  }
+  
   return drupal_render($entity_view);
 }
 
@@ -3837,7 +3829,7 @@ function edoweb_update_7179(){
 /**
  * Update all
  */
-function edoweb_update_7211(){
+function edoweb_update_7213(){
   _update_edoweb_installed_fields();
   _update_edoweb_installed_instances();
   _update_rdf_mapping();
