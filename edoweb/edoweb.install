@@ -2749,6 +2749,7 @@ function _edoweb_installed_instances() {
   										'target_bundles' => array(
   												'part' => 'part',
   												'file' => 'file',
+  										        'researchData'=> 'researchData',
   										),
   								),
   						),
