@@ -236,6 +236,12 @@ function _edoweb_authority_table_headers() {
     );
 }
 
+function _set_default_column_for_sort(){
+    return array(
+        'selected' => 'field_edoweb_issued',
+        'order' => 'desc',
+    );
+}
 
 /**
  * Due to the way Drupals t() function works, variable strings must be
@@ -440,5 +446,12 @@ function _edoweb_format_access_icons($entity) {
     }
     
     return $icons;
+    
+}
+
+function config_column_for_table_sort(){
+    $sorted_column = variable_get('sort_table_by_column', set_default_column_for_sort());
+    
+    return $sorted_column['selected'];
     
 }
