@@ -236,10 +236,14 @@ function _edoweb_authority_table_headers() {
     );
 }
 
-function _set_default_column_for_sort(){
+function _edoweb_entity_table_headers_defaults() {
     return array(
-        'selected' => 'field_edoweb_issued',
-        'order' => 'desc',
+        '_edoweb_compact_view',
+        'field_edoweb_issued',
+        'objectTimestamp',
+        '_edoweb_format_access_icons',
+        '_edoweb_link_lastmodified',
+        'bundle_type',
     );
 }
 
@@ -450,8 +454,8 @@ function _edoweb_format_access_icons($entity) {
 }
 
 function config_column_for_table_sort(){
-    $sorted_column = variable_get('sort_table_by_column', set_default_column_for_sort());
+    $sort_column = variable_get('sort_table_by_column', _set_default_column_for_sort());
     
-    return $sorted_column['selected'];
+    return $sort_column;
     
 }
