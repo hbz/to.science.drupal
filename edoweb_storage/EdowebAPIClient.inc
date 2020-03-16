@@ -619,7 +619,7 @@ class EdowebAPIClient implements EdowebAPIClientInterface
         // Define which facets with personal data shuold be shown for which role 
         global $user;
         if (in_array('edoweb_backend_user', $user->roles)) { 
-         $query['facets']['lastModifiedBy']['terms'] = array(
+         $query['facets']['createdBy']['terms'] = array(
                 'field' => 'isDescribedBy.lastModifiedBy',
                'size' => 99
            );
