@@ -128,17 +128,20 @@ function edoweb_repository_configuration_form() {
         '#options' => $entity_table_headers,
         '#default_value' => variable_get('user_entity_table_headers',  _edoweb_entity_table_headers_defaults()),
     );
-    
-    $form['sort_table_by_column'] = array(
-        '#type' => 'select',
-        '#title' => t('Zur Sortierung zu verwendende Spalte'),
-        '#options' => get_column_names_selected(_edoweb_entity_table_headers(), variable_get('user_entity_table_headers', _edoweb_entity_table_headers_defaults())),
-        '#default_value' => config_column_for_table_sort(),
-        '#description' => t('Wählen Sie aus den ausgewählten Spalten, eine nach der die Tabelle bei der Anzeige für Endnutzer sortiert werden soll.'),
+
+    $form['user_table_headers_sort'] = array(
+        '#type' => 'radioboxes',
+        '#title' => t('Dokument-Tabellenheader für Endnutzer'),
+        '#options' => $user_table_headers_sort,
+        '#default_value' => variable_get('user_table_headers_sort'),
     );
-    
-    
-    $authority_table_headers = get_column_names(_edoweb_authority_table_headers());
+
+
+
+    $authority_table_headers = array();
+    foreach (_edoweb_authority_table_headers() as $field => $column) {
+        $authority_table_headers[$field] = $column['data'];
+    }
     
     $form['editor_authority_table_headers'] = array(
         '#type' => 'checkboxes',
