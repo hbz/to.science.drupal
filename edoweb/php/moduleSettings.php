@@ -113,10 +113,7 @@ function edoweb_repository_configuration_form() {
         '#default_value' => variable_get('user_available_facets', array('creator.@id')),
     );
     
-    $entity_table_headers = array();
-    foreach (_edoweb_entity_table_headers() as $field => $column) {
-        $entity_table_headers[$field] = $column['data'];
-    }
+    $entity_table_headers = get_column_names(_edoweb_entity_table_headers());
     
     $form['editor_entity_table_headers'] = array(
         '#type' => 'checkboxes',
@@ -131,20 +128,17 @@ function edoweb_repository_configuration_form() {
         '#options' => $entity_table_headers,
         '#default_value' => variable_get('user_entity_table_headers',  _edoweb_entity_table_headers_defaults()),
     );
-
-    $form['user_table_headers_sort'] = array(
-        '#type' => 'radioboxes',
-        '#title' => t('Dokument-Tabellenheader für Endnutzer'),
-        '#options' => $user_table_headers_sort,
-        '#default_value' => variable_get('user_table_headers_sort'),
+    
+    $form['sort_table_by_column'] = array(
+        '#type' => 'select',
+        '#title' => t('Zur Sortierung zu verwendende Spalte'),
+        '#options' => get_column_names_selected(_edoweb_entity_table_headers(), variable_get('user_entity_table_headers', _edoweb_entity_table_headers_defaults())),
+        '#default_value' => config_column_for_table_sort(),
+        '#description' => t('Wählen Sie aus den ausgewählten Spalten, eine nach der die Tabelle bei der Anzeige für Endnutzer sortiert werden soll.'),
     );
-
-
-
-    $authority_table_headers = array();
-    foreach (_edoweb_authority_table_headers() as $field => $column) {
-        $authority_table_headers[$field] = $column['data'];
-    }
+    
+    
+    $authority_table_headers = get_column_names(_edoweb_authority_table_headers());
     
     $form['editor_authority_table_headers'] = array(
         '#type' => 'checkboxes',
@@ -163,3 +157,31 @@ function edoweb_repository_configuration_form() {
     return system_settings_form($form);
     
 }
+
+/** Fetch Column Names from any Headers Array
+ *
+ *
+ **/
+function get_column_names($entity_table_column) {
+    $column_name = array();
+    foreach ($entity_table_column as $field => $column) {
+        $column_name[$field] = $column['data'];
+    }
+    return $column_name;
+}
+
+/** Fetch Column Names from Array of selected Headers
+ *
+ *
+ */
+function get_column_names_selected($entity_table_column, $columns_selected){
+    $columns = get_column_names($entity_table_column);
+    $column_name = array();
+    foreach ($columns_selected as $key => $value) {
+        if($value != '' && $value !=null){
+            $column_name[$key] = $entity_table_column[$value]['data'];
+        }
+    }
+    return $column_name;
+}
+

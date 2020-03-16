@@ -236,6 +236,16 @@ function _edoweb_authority_table_headers() {
     );
 }
 
+function _edoweb_entity_table_headers_defaults() {
+    return array(
+        '_edoweb_compact_view',
+        'field_edoweb_issued',
+        'objectTimestamp',
+        '_edoweb_format_access_icons',
+        '_edoweb_link_lastmodified',
+        'bundle_type',
+    );
+}
 
 /**
  * Due to the way Drupals t() function works, variable strings must be
@@ -440,5 +450,12 @@ function _edoweb_format_access_icons($entity) {
     }
     
     return $icons;
+    
+}
+
+function config_column_for_table_sort(){
+    $sort_column = variable_get('sort_table_by_column', _set_default_column_for_sort());
+    
+    return $sort_column;
     
 }
