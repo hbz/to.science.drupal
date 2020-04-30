@@ -181,7 +181,7 @@ function edoweb_basic_search_entities(
                 if (!is_array($type)) {
                     $type = array($type);
                 } else {
-                    $type == array_keys($type);
+                    $type = array_keys($type);
                 }
                 $efq->addMetaData('type', $type);
             }
