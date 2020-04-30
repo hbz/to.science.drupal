@@ -613,6 +613,10 @@ class EdowebAPIClient implements EdowebAPIClientInterface
                     $query['facets'][$field_name]['terms']['order'] = 'reverse_term';
                     $query['facets'][$field_name]['terms']['size'] = $facet_size;
                 }
+                if ($field_name == 'rdftype') {
+                    $query['facets'][$field_name]['terms']['order'] = 'term';
+                    $query['facets'][$field_name]['terms']['size'] = 15;
+                }
             }
         }
 
