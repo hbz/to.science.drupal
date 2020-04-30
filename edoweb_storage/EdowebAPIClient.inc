@@ -615,7 +615,7 @@ class EdowebAPIClient implements EdowebAPIClientInterface
                 }
                 if ($field_name == 'rdftype') {
                     $query['facets'][$field_name]['terms']['order'] = 'term';
-                    $query['facets'][$field_name]['terms']['size'] = 15;
+                    $query['facets'][$field_name]['terms']['size'] = 99;
                 }
             }
         }
