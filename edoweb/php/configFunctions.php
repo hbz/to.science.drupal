@@ -396,6 +396,7 @@ function edoweb_rdf_types($bundle = null) {
         'version' => array('rd_lv:ArchivedWebPageVersion'),
         'generic' => array('dc:BibliographicResource'),
         'researchData' => array('rd_regal:ResearchData'),
+        'orca' => array('rd_regal:orca'),
         //FIXME: do we need an RDF type mapping for the 'part' bundle?
         'part' => array('dc:BibliographicResource'),
         'authority_resource' => array('rd_gnd:AuthorityResource'),

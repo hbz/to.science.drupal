@@ -93,6 +93,7 @@
 										|| bundle == 'journal'
 										|| bundle == 'proceeding'
 										|| bundle == 'researchData'
+										|| bundle == 'orca'
 										|| bundle == 'article') {
 									window.location = href;
 								} else {
