@@ -93,7 +93,7 @@
 										|| bundle == 'journal'
 										|| bundle == 'proceeding'
 										|| bundle == 'researchData'
-										|| bundle == 'oeResource'
+										|| bundle == 'oer'
 										|| bundle == 'article') {
 									window.location = href;
 								} else {

@@ -196,10 +196,10 @@ function edoweb_entity_info() {
                     'access arguments' => array('administer edoweb_basic entities'),
                 ),
             ),
-            'oeResource' => array(
+            'oer' => array(
                 'label' => t('Bildungsmaterialien'),
                 'admin' => array(
-                    'path' => 'admin/structure/edoweb_basic/oeResource/manage',
+                    'path' => 'admin/structure/edoweb_basic/oer/manage',
                     'access arguments' => array('administer edoweb_basic entities'),
                 ),
             ),
