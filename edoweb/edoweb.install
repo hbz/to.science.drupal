@@ -2671,8 +2671,7 @@ function _edoweb_installed_instances() {
       'field_edoweb_assoc_publication'=> array(),
       'field_edoweb_assoc_dataset'=> array(),
       'field_edoweb_references'=> array(),
-    ,
-  );
+      ),
 
     /*
      * Field instances in open educational resource bundle
@@ -2711,6 +2710,7 @@ function _edoweb_installed_instances() {
           ),
         ),
       ),
+    )
   );
 }
 
