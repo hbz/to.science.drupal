@@ -68,11 +68,16 @@
        * in order for Drupal.t to pick them up.
        */
       translations['Add researchData'] = Drupal.t('Add researchData');
+      translations['Add monograph'] = Drupal.t('Add monograph');
+      translations['Add journal'] = Drupal.t('Add journal');
       translations['Add volume'] = Drupal.t('Add volume');
       translations['Add issue'] = Drupal.t('Add issue');
+      translations['Add article'] = Drupal.t('Add article');
       translations['Add file'] = Drupal.t('Add file');
       translations['Add part'] = Drupal.t('Add part');
+      translations['Add webpage'] = Drupal.t('Add webpage');
       translations['Add version'] = Drupal.t('Add version');
+      translations['Add oer'] = Drupal.t('Add ORCA-OER');
     }
   }
 
