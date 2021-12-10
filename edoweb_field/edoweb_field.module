@@ -97,6 +97,7 @@ function edoweb_entity_label($entity_type, $entity_id) {
     'http' => array('header'  => "Authorization: Basic " . base64_encode("$user:$pass"))
   ));
   $label = file_get_contents("{$edoweb_api_host}/tools/etikett?url={$url}&column=label", false, $context);
+//  print 'IK label='.$label;
   if ($label) {
     die($label);
   }

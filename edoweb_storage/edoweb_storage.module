@@ -557,7 +557,7 @@ function _edoweb_storage_entity_serialize_rdf(
 
   $wrapper = entity_metadata_wrapper(EDOWEB_ENTITY_TYPE, $entity);
 
-  if(!empty($entity->postData) && ($entity->type == 'researchData' ||$entity->type == 'article')){
+  if(!empty($entity->postData) && ($entity->type == 'researchData' || $entity->type == 'article' || $entity->type == 'oer')){
 	$rdfxml_parser = new LibRDF_Parser('rdfxml');
         $rdf_model = new LibRDF_Model(new LibRDF_Storage());
         $rdf_serializer = new LibRDF_Serializer('ntriples');
@@ -796,6 +796,8 @@ function _entity_set_value($wrapper, $field_info, $value, $rdf_model) {
           $label = $value;
         }
       }
+      //      Label des Vokabulars, nicht der Entität:
+      //      print 'IK label:'.$label;
       if ($wrapper->{$field_name} instanceOf EntityValueWrapper) {
         $wrapper->{$field_name} = $value->getValue();
       } else if ($wrapper->{$field_name} instanceOf EntityStructureWrapper) {

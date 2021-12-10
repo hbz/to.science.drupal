@@ -270,6 +270,8 @@ function _edoweb_map_string($string) {
             return t('webpage');
         case 'researchData':
             return t('researchData');
+        case 'oer':
+            return t('open educational resource');
         case 'version':
             return t('version');
         case 'part':
@@ -293,7 +295,9 @@ function _edoweb_map_string($string) {
         case 'Add webpage':
             return t('Add webpage');
         case 'Add researchData':
-            return t('Add researchData');
+            return t('Neues Bildungsmaterial');
+        case 'Add oer':
+            return t('Neues OER');
         case 'Add version':
             return t('Add version');
         case 'createdBy':
@@ -396,6 +400,7 @@ function edoweb_rdf_types($bundle = null) {
         'version' => array('rd_lv:ArchivedWebPageVersion'),
         'generic' => array('dc:BibliographicResource'),
         'researchData' => array('rd_regal:ResearchData'),
+        'oer' => array('rd_regal:oer'),
         //FIXME: do we need an RDF type mapping for the 'part' bundle?
         'part' => array('dc:BibliographicResource'),
         'authority_resource' => array('rd_gnd:AuthorityResource'),

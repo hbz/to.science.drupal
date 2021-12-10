@@ -16,7 +16,7 @@ function _edoweb_build_tree($tree) {
     // Append download links when applicable
     // Rm: EDOZWO-1005 hide all pdf-icons in tree
     // if ('file' == $entity_bundle && isset($tree['hasData'])) {
-    //    $tree_item['data'] .= _edoweb_download_link($tree['hasData']['format'], $tree['hasData']['@id']);
+    //     $tree_item['data'] .= _edoweb_download_link($tree['hasData']['format'], $tree['hasData']['@id']);
     // }
     
     // Add child enities to tree
