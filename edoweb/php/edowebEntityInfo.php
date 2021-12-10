@@ -47,20 +47,6 @@ function edoweb_entity_info() {
         // Bundles are alternative groups of fields or configuration
         // associated with a base entity type.
         'bundles' => array(
-            'monograph' => array(
-                'label' => t('Monograph'),
-                'admin' => array(
-                    'path' => 'admin/structure/edoweb_basic/monograph/manage',
-                    'access arguments' => array('administer edoweb_basic entities'),
-                ),
-            ),
-            'journal' => array(
-                'label' => t('Journal'),
-                'admin' => array(
-                    'path' => 'admin/structure/edoweb_basic/journal/manage',
-                    'access arguments' => array('administer edoweb_basic entities'),
-                ),
-            ),
             'volume' => array(
                 'label' => t('Volume'),
                 'admin' => array(
@@ -72,13 +58,6 @@ function edoweb_entity_info() {
                 'label' => t('Issue'),
                 'admin' => array(
                     'path' => 'admin/structure/edoweb_basic/issue/manage',
-                    'access arguments' => array('administer edoweb_basic entities'),
-                ),
-            ),
-            'article' => array(
-                'label' => t('Article'),
-                'admin' => array(
-                    'path' => 'admin/structure/edoweb_basic/article/manage',
                     'access arguments' => array('administer edoweb_basic entities'),
                 ),
             ),
@@ -190,16 +169,9 @@ function edoweb_entity_info() {
                 ),
             ),
             'researchData' => array(
-                'label' => t('Forschungsdaten'),
-                'admin' => array(
-                    'path' => 'admin/structure/edoweb_basic/researchData/manage',
-                    'access arguments' => array('administer edoweb_basic entities'),
-                ),
-            ),
-            'oer' => array(
                 'label' => t('Bildungsmaterialien'),
                 'admin' => array(
-                    'path' => 'admin/structure/edoweb_basic/oer/manage',
+                    'path' => 'admin/structure/edoweb_basic/researchData/manage',
                     'access arguments' => array('administer edoweb_basic entities'),
                 ),
             ),
