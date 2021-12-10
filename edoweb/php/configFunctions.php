@@ -276,28 +276,12 @@ function _edoweb_map_string($string) {
             return t('version');
         case 'part':
             return t('part');
-        case 'Add monograph':
-            return t('Add monograph');
-        case 'Add article':
-            return t('Add article');
-        case 'Add journal':
-            return t('Add journal');
-        case 'Add volume':
-            return t('Add volume');
-        case 'Add issue':
-            return t('Add issue');
-        case 'Add Publication':
-            return t('Add Publication');
         case 'Add file':
             return t('Add file');
         case 'Add part':
             return t('Add part');
-        case 'Add webpage':
-            return t('Add webpage');
         case 'Add researchData':
             return t('Neues Bildungsmaterial');
-        case 'Add oer':
-            return t('Neues OER');
         case 'Add version':
             return t('Add version');
         case 'createdBy':
