@@ -447,6 +447,7 @@ class EdowebAPIClient implements EdowebAPIClientInterface
             }
         }
 
+
         // Search resources
         $http_url = sprintf('%s/%s/_search', $this->__es_api_host, $index);
         $query = $this->_efq_to_es($efq, $page);
