@@ -295,9 +295,9 @@ function _edoweb_map_string($string) {
         case 'Add webpage':
             return t('Add webpage');
         case 'Add researchData':
-            return t('Add researchData');
+            return t('Neues Bildungsmaterial');
         case 'Add oer':
-            return t('Add OER');
+            return t('Neues OER');
         case 'Add version':
             return t('Add version');
         case 'createdBy':

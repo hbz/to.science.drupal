@@ -34,6 +34,7 @@ class EdowebBasicController extends EntityAPIController {
       } else {
         $api = new EdowebAPIClient();
         if ($entity = $api->load($remote_id, $rdf_model)) {
+          //		print '<span>IK: $entity->label:'.$entity->label;
           $entities[$remote_id] = $entity;
           $this->cacheSet(array($remote_id => $entities[$remote_id]));
         }

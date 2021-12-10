@@ -77,7 +77,7 @@
       translations['Add part'] = Drupal.t('Add part');
       translations['Add webpage'] = Drupal.t('Add webpage');
       translations['Add version'] = Drupal.t('Add version');
-
+      translations['Add oer'] = Drupal.t('Add ORCA-OER');
     }
   }
 

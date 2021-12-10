@@ -605,7 +605,7 @@ function edoweb_block_view($delta = '') {
         }
 
       $block['content']['entity_list']['#title'] = $table_name; 
-      //var_dump($block);
+      // var_dump($block);
       break;
   }
   return $block;
@@ -825,8 +825,9 @@ function _edoweb_is_webpage_entity($entity, $permissions = null) {
 }
 
 function _full_title($label, $entity, $attributes = array()) {
+  //var_dump($entity );
   return '<h1 class="title">' . _get_edoweb_url($entity->label(), $entity, $attributes) . '</h1>'
-           . ($entity->subLabel() ? '<h2 class="title-suffix">' . $entity->subLabel() . '</h2>' : '');
+    . ($entity->subLabel() ? '<h2 class="title-suffix">' . $entity->subLabel() . '</h2>' : '');
 }
 
 function _compact_title($label, $entity, $attributes = array()) {
@@ -846,6 +847,7 @@ function _compact_title($label, $entity, $attributes = array()) {
 function _get_edoweb_url($label, $entity, $attributes = array()) {
   if (is_object($entity)) {
     $wrapper = entity_metadata_wrapper('edoweb_basic', $entity);
+   //var_dump($wrapper);
     $curie = $entity->remote_id;
   } else {
     $curie = $entity;

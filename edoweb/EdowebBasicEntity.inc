@@ -89,6 +89,10 @@ class EdowebBasicEntity extends Entity {
         $label_fields[] = 'field_edoweb_label';
         break;
     }
+    // print 'IK label_fields[0]:'.$label_fields[0];
+    // print 'IK label_fields[1]:'.$label_fields[1];
+    // Achtung! Bei OER-Objekten ist der String leer, aber bei Monographien steht der Titel drin !!!
+    // print 'IK stringifyFields:'.$this->stringifyFields($label_fields)[0];
 
     if(!isset($this->remote_id))
         return "";
@@ -126,17 +130,27 @@ class EdowebBasicEntity extends Entity {
               $render = field_view_value(
                 EDOWEB_ENTITY_TYPE, $this, $label_field, array('value' => $value)
               );
+	      // print 'IK value:'.$value;
             }
+	    // Hier kommt er weder bei OER noch bei Monographien hin:
+	    // print 'IK values[0]:'.$values[0];
             $values[] = drupal_render($render);
           }
         } else {
           $render = field_view_value(
             EDOWEB_ENTITY_TYPE, $this, $label_field, array('value' => $title_value)
           );
+	  // Bei Monographien kommt er hier hin, bei OER nicht:
+	  // print 'IK title_value:'.$title_value;
           $values[] =  html_entity_decode(drupal_render($render),ENT_QUOTES);
         }
   
-        if ($title_value) $title_values[] = implode(' ' . variable_get('sub_title_field_value_separator') . ' ', $values);
+	if ($title_value) {
+		$title_values[] = implode(' ' . variable_get('sub_title_field_value_separator') . ' ', $values);
+	} else {
+		// Hier kommt er bei OER-Ressourcen hin:
+		// print 'IK: $title_value is empty';
+	}
       } catch (EntityMetadataWrapperException $e) {
          //drupal_set_message($e);
       }

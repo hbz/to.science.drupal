@@ -40,6 +40,8 @@ class EdowebAPIClient implements EdowebAPIClientInterface
             return false;
         }
         $namespace = variable_get('edoweb_api_namespace');
+//	print 'IK namespace:'.$namespace;
+//	print 'IK label:'.$entity->label;
         return $entity;
     }
 
