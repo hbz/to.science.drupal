@@ -178,6 +178,14 @@ function edoweb_entity_property_info() {
     'label' => t('A name for the metadata record'),
     'type' => 'text',
   );
+  $properties['submitter'] = array(
+      'label' => t('The person submitting the oer'),
+      'type' => 'text',
+  );
+  $properties['submitter_email'] = array(
+      'label' => t('An email address of the submitter '),
+      'type' => 'text',
+  );
   return $property_info;
 }
 

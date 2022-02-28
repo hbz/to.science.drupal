@@ -320,6 +320,10 @@ function _edoweb_map_string($string) {
             return t('type');
         case 'medium':
             return t('medium');
+        case 'submittedBy':
+            return t('submittedBy');
+        case 'submittedByEmail':
+            return t('submittedByEmail');
         default:
             return $string;
     }
