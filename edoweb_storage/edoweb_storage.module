@@ -760,7 +760,23 @@ function _edoweb_storage_entity_deserialize_rdf($entity, $rdf_model) {
   } catch (LibRDF_LookupError $e) {
     $entity->name = $entity->remote_id;
   }
-
+  try {
+      $entity->submitter = $rdf_model->getTarget(
+          $rdf_about_subject,
+          new LibRDF_URINode(_edoweb_expand_curie('rd_regal:submittedBy'))
+          )->getValue();
+  } catch (LibRDF_LookupError $e) {
+      $entity->submitter = $entity->uid;
+  }
+  try {
+      $entity->submitter_email = $rdf_model->getTarget(
+          $rdf_about_subject,
+          new LibRDF_URINode(_edoweb_expand_curie('rd_regal:submittedByEmail'))
+          )->getValue();
+  } catch (LibRDF_LookupError $e) {
+      $entity->submitter_email = $entity->uid;
+  }
+  
 }
 
 function _entity_set_value($wrapper, $field_info, $value, $rdf_model) {

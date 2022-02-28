@@ -200,7 +200,11 @@ class EdowebAPIClient implements EdowebAPIClientInterface
             $data['isDescribedBy']['createdBy'] = $entity->uid;
         if (isset($entity->name))
             $data['isDescribedBy']['name'] = $entity->name;
-
+        if (isset($entity->submitter))
+            $data['isDescribedBy']['submittedBy'] = $entity->submitter;
+        if (isset($entity->submitter_email))
+            $data['isDescribedBy']['submittedByEmail'] = $entity->submitter_email;
+                    
         $parents = field_get_items('edoweb_basic', $entity, 'field_edoweb_struct_parent');
         if (FALSE !== $parents) {
             $data['parentPid'] = $parents[0]['value'];
