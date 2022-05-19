@@ -128,6 +128,29 @@ function edoweb_init() {
     
     // Add header meta tag for IE to head
     //drupal_add_html_head($meta_ie_render_engine, 'meta_ie_render_engine');
+    
+    // Google Scholar/ Highwire Press tags
+    $citation_title = array (
+        '#type' => 'html_tag',
+        '#tag' => 'meta',
+        '#attributes' => array(
+            'name' => 'citation_title',
+            'content' =>  'Proof of concept',
+        ),
+        '#weight' => '-99999',
+    );
+    $citation_author = array (
+        '#type' => 'html_tag',
+        '#tag' => 'meta',
+        '#attributes' => array(
+            'name' => 'citation_author',
+            'content' =>  'John Doe',
+        ),
+        '#weight' => '-99999',
+    );
+    drupal_add_html_head($citation_title, 'citation_title');
+    drupal_add_html_head($citation_author, 'citation_author');
+
   }
 }
 
