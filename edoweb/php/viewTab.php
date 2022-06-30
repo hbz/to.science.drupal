@@ -42,7 +42,9 @@ function edoweb_basic_view($entity, $view_mode = 'default') {
                     
                     $userInfo = '<small>Letzte Änderung ';
                     $userInfo .= isset($entity->updated) ? _edoweb_format_date($entity->updated) : '';
-                    $userInfo .= '. Erstellt: ';
+                    $userInfo .= '.<br />Einlieferung von ';
+                    $userInfo .= isset($entity->submitter) ? $entity->submitter : 'not found';
+                    $userInfo .= '.<br /> Erstellt: ';
                     $userInfo .= isset($entity->created) ? _edoweb_format_date($entity->created) : '';
                     $userInfo .= ' durch ' .  _edoweb_user_name($entity->uid) . '</small>';
                     
