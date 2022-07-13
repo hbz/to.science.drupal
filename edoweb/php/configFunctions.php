@@ -445,7 +445,7 @@ function _edoweb_format_access_icons($entity) {
             $icons .= '&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-exclamation-circle" title="' . t($entity->access_md) . '"style="color:red;"></i>';
             break;
         case 'public':
-            $icons .= '&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-exclamation-circle" title="' . t($entity->access_md) . '"style="color:green;"></i>';
+            $icons .= '&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-check-circle" title="' . t($entity->access_md) . '"style="color:green;"></i>';
             break;
     }
     
