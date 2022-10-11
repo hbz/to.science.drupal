@@ -52,14 +52,25 @@ function edoweb_basic_view($entity, $view_mode = 'default') {
                     
                 }
                 
-                $viewSource = '<p/><small>' . l(
-                    'View source',
-                    _edoweb_expand_curie($entity->remote_id),
+                $viewSource = '<p/><p><small>' . l(
+                    'View AMB',
+                    _edoweb_expand_curie($entity->remote_id . '/lrmiData'),
                     array('attributes' => array(
                         'target'=>'_blank',
                         'class' => array('entity-id'),
                     ))
-                    ) . '</small>';
+                    ) . '<br />' .l(
+		    'View to.science',
+                    _edoweb_expand_curie($entity->remote_id . '.json2'),
+                    array('attributes' => array(
+                        'target'=>'_blank',
+                        'class' => array('entity-id'),
+                    ))
+                    ) . '</small></p>';
+
+                    //<p/><p><small>' . l(
+                    //'View AMB-Json',_edoweb_expand_curie($entity->remote_id),
+                    
                     $mabSource="";
                     if (! empty($origin)) {
                         $mabSource	='<p/><small>' . l(
