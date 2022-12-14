@@ -354,9 +354,20 @@ function edoweb_basic_data($entity) {
       $file_type = $_FILES['files']['type'][0];
       $file_size = $_FILES['files']['size'][0];
       $file_uri = file_unmanaged_move($tmp_name);
-      $entity->field_edoweb_datastream[LANGUAGE_NONE][]['value'] = $file_uri;
+       # neu Kuss Debugging 01.12.2022 
+      $file_handle = fopen('/tmp/hphp', 'a+');
+      fwrite($file_handle, 'file_name='.$file_name."\n");
+      fwrite($file_handle, 'tmp_name='.$tmp_name."\n");
+      fwrite($file_handle, 'file_uri='.$file_uri."\n");
+      fclose($file_handle);
+       # Debugging 01.12.2022
+      # OSU-172 Ingolf
+      # old $entity->field_edoweb_datastream[LANGUAGE_NONE][]['value'] = $file_uri;
+      $entity->field_edoweb_datastream[LANGUAGE_NONE][0]['value'] = $file_uri;
       $entity->field_edoweb_label[LANGUAGE_NONE][]['value'] = $file_name;
-      $entity->field_edoweb_filetype[LANGUAGE_NONE][]['value'] = $file_type;
+      #OSU-172 Hasan // encodingFormat
+      # old $entity->field_edoweb_filetype[LANGUAGE_NONE][]['value'] = $file_type;
+      $entity->field_edoweb_filetype[LANGUAGE_NONE][0]['value'] = $file_type;
       $entity->field_edoweb_filesize[LANGUAGE_NONE][]['value'] = $file_size;
       $api->saveFiles($entity);
     } else if (_edoweb_field_access($entity, array('field_edoweb_datastream'))
