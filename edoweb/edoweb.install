@@ -2737,7 +2737,7 @@ function _edoweb_installed_instances() {
  		'field_edoweb_assoc_dataset'=> array(),
  		'field_edoweb_references'=> array(),
   		),
-  );
+  ),
 }
 
 function _edoweb_field_instance_defaults($field_name) {
