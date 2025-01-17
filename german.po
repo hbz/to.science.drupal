@@ -273,6 +273,10 @@ msgstr "Neues Heft"
 msgid "Add article"
 msgstr "Neue Publikation"
 
+#: edoweb/edoweb.module:1175
+msgid "Add ktlbData"
+msgstr "Neue EmiMin Daten"
+
 #: edoweb/edoweb.module:1177
 msgid "Add file"
 msgstr "Neue Datei"

@@ -87,8 +87,11 @@
         additional_fields.change(function() {
           var instance = Drupal.settings.edoweb.fields[bundle][$(this).val()].instance;
           var field = createField(instance);
-          if(bundle=='researchData' || bundle=='article' || bundle== 'monograph' || bundle=='journal' || bundle=='webpage'){
+          if(bundle=='researchData' || bundle=='article' || bundle== 'monograph' || bundle=='journal' || bundle=='webpage' || "ktblData"){
         	 Drupal.zettel.useZettel(bundle,entity,context); 
+          // if(bundle=='ktblData'){
+			// Drupal.form.useForm(bundle,entity,context)
+		  // }
           }else{
         	  activateFields(field, bundle, context);
           }
@@ -258,7 +261,7 @@
           // and a real redirect is triggered.
           if (subject.type == 'bnode') {
             entity_load_json('edoweb_basic', resource_uri).onload = function() {
-              if (bundle == 'monograph' || bundle=='webpage' || bundle == 'journal' || bundle=='proceeding'|| bundle=='researchData' || bundle=='article') {
+              if (bundle == 'monograph' || bundle=='webpage' || bundle == 'journal' || bundle=='proceeding'|| bundle=='researchData' ||  bundle=='ktblData'|| bundle=='article') {
             	 window.location = href;
               } else {
                 localStorage.setItem('cut_entity', this.responseText);
