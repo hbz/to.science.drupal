@@ -2599,8 +2599,80 @@ function _edoweb_installed_instances() {
   								),
   						),
   				),
+  				'field_edoweb_source' => array(
+  						'settings'    => array(
+  								'target_type' => 'edoweb_basic',
+  								'handler_settings' => array(
+  										'target_bundles' => array(
+  												'proceeding' => 'proceeding',
+  										),
+  								),
+  						),
+  				),
+  				'field_edoweb_volume' => array(),
+  				'field_edoweb_struct_child' => array(
+  						'settings'    => array(
+  								'target_type' => 'edoweb_basic',
+  								'handler_settings' => array(
+  										'target_bundles' => array(
+  												'part' => 'part',
+  												'file' => 'file',
+  										),
+  								),
+  						),
+  				),
+  				'field_edoweb_parent' => array(
+  						'settings'    => array(
+  								'target_type' => 'edoweb_basic',
+  								'handler_settings' => array(
+  										'target_bundles' => array(
+  												'collection' => 'collection',
+  										),
+  								),
+  						),
+  				),
+  				'field_edoweb_collected_by' => array(
+  						'settings'    => array(
+  								'target_type' => 'edoweb_basic',
+  								'handler_settings' => array(
+  										'target_bundles' => array(
+  												'collection' => 'collection',
+  										),
+  								),
+  						),
+  				),
+  				'field_edoweb_thesis_information' => array(),
+  				'field_edoweb_type' => array(),
+  				'field_edoweb_medium' => array('required' => TRUE),     
+      'field_edoweb_funding' => array(),
+	  'field_edoweb_recording_period' => array(),
+	  'field_edoweb_recording_location' => array(),
+	  'field_edoweb_recording_coord' => array(),
+          'field_edoweb_manual'=> array(),
+ 	  'field_edoweb_previous_version' => array(),
+	  'field_edoweb_next_version' => array(), 
+  				'field_edoweb_urn' => array(),
+  				'field_edoweb_issn' => array(),
+  				'field_edoweb_isbn10' => array('required' => TRUE),
+  				'field_edoweb_isbn13' => array('required' => TRUE),
+  				'field_edoweb_doi' => array(),
+  				'field_edoweb_ht_with_link' => array(),
+  				'field_edoweb_identifier_ht' => array(),
+  				'field_edoweb_institution' => array('required' => TRUE),
+  				'field_edoweb_year_of_copyright' =>  array('required' => TRUE),
+  				'field_edoweb_embargo_time' =>  array('required' => TRUE),
+  				'field_edoweb_license' => array('required' => TRUE),
+  				'field_edoweb_professional_group' =>  array('required' => TRUE),
+  				'field_edoweb_related_resource' =>  array('required' => TRUE),
+  				'field_edoweb_data_origin' =>  array('required' => TRUE),
+ 		'field_edoweb_project_id'=> array(),
+ 		'field_edoweb_funding_program'=> array(),
+ 		'field_edoweb_assoc_publication'=> array(),
+ 		'field_edoweb_assoc_dataset'=> array(),
+ 		'field_edoweb_references'=> array(),
   		),
- }
+  );
+}
 
 function _edoweb_field_instance_defaults($field_name) {
   $t = get_t();
