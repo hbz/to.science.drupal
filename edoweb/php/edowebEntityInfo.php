@@ -195,7 +195,14 @@ function edoweb_entity_info() {
                     'path' => 'admin/structure/edoweb_basic/researchData/manage',
                     'access arguments' => array('administer edoweb_basic entities'),
                 ),
-            ),
+           ),
+           'ktblData' => array(
+                'label' => t('EmiMin Forschungsdaten'),
+                'admin' => array(
+                    'path' => 'admin/structure/edoweb_basic/ktblData/manage',
+                    'access arguments' => array('administer edoweb_basic entities'),
+                ),
+           ),
            
         ),
         'view modes' => array(

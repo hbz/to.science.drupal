@@ -69,6 +69,7 @@ function edoweb_basic_search_entities_form($form, &$form_state, $advanced, $sear
         $options = array(
             'generic' => t('Any'),
             'researchData'=>t('Forschungsdaten'),
+            'ktblData'=>t('EmiMin Forschungsdaten'),
             'monograph' => t('Monograph'),
             'journal' => t('Journal'),
             'webpage' => t('Webpage'),
@@ -196,7 +197,7 @@ function edoweb_basic_search_entities(
             
             if (! (@$childlevel = $query['childlevel']) && ! (@$fulltext = $query['fulltext']) ) {
                 //FIXME: this overwrites person etc bundles!!!
-                $efq->entityCondition('bundle', array('monograph', 'journal', 'webpage','researchData','article'));
+                $efq->entityCondition('bundle', array('monograph', 'journal', 'webpage','researchData', 'ktblData', 'article'));
             }
             
             if (@$fulltext = $query['fulltext']) {
