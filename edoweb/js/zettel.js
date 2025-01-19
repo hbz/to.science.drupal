@@ -24,7 +24,26 @@
 			if (!isEmpty($('.tabs', context))) {
 				loadZettel(bundle, entity, context);
 			} else {
-				var zettel_form = '<div id="successBox" class="success"></div>'
+				if (bundle == "ktblData"){
+					var zettel_form = '<div id="successBox" class="success"></div>'
+							+ '<div id="warningBox" class="warning"></div>'
+							+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
+							+ Drupal.settings.edoweb.zettelServiceUrl
+							+ '/forms'
+							+ '?id=katalog:'
+							+ bundle
+							+ '&format=xml'
+							+ '&documentId=_:foo'
+							+ '&topicId='
+							+ Drupal.settings.baseUrl
+							+ '/resource/add/'
+							+ bundle
+							+ '"'
+							+ ' width="800px" height="1024px" style="border: none;position:relative;" id="iFrame">'
+							+ '<p>iframes are not supported by your browser.</p></iframe>';		
+						$('.region.region-content').html(zettel_form);
+				} else { 
+					var zettel_form = '<div id="successBox" class="success"></div>'
 						+ '<div id="warningBox" class="warning"></div>'
 						+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
 						+ Drupal.settings.edoweb.zettelServiceUrl
@@ -40,7 +59,8 @@
 						+ '"'
 						+ ' width="800px" height="1024px" style="border: none;position:relative;" id="iFrame">'
 						+ '<p>iframes are not supported by your browser.</p></iframe>';
-				$('.region.region-content').html(zettel_form);
+					$('.region.region-content').html(zettel_form);
+				}
 			}
 		}
 	}
