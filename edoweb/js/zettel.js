@@ -45,7 +45,8 @@
 							+ '<p>iframes are not supported by your browser.</p></iframe>';		
 						$('.region.region-content').html(zettel_form);
 				} else { 
-					var zettel_form = '<h1>HUHU non ktbl</h1><div id="successBox" class="success"></div>'
+					var zettel_form = '<h1>HUHU non ktbl' + Drupal.settings.edoweb.formsServiceUrl 
+						+ '</h1><div id="successBox" class="success"></div>'
 						+ '<div id="warningBox" class="warning"></div>'
 						+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
 						+ Drupal.settings.edoweb.zettelServiceUrl
