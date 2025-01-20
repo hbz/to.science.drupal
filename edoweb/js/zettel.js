@@ -25,7 +25,7 @@
 				loadZettel(bundle, entity, context);
 			} else {
 				if (bundle == "ktblData"){
-					var zettel_form = '<div id="successBox" class="success"></div>'
+					var zettel_form = '<h1>HUHU ktbl</h1><div id="successBox" class="success"></div>'
 							+ '<div id="warningBox" class="warning"></div>'
 							+ '<div><a href=">' + Drupal.settings.edoweb.formsServiceUrl + '/ktblData" target="_blank">'
 							+ Drupal.settings.edoweb.formsServiceUrl + '</a></div>'
@@ -45,7 +45,7 @@
 							+ '<p>iframes are not supported by your browser.</p></iframe>';		
 						$('.region.region-content').html(zettel_form);
 				} else { 
-					var zettel_form = '<div id="successBox" class="success"></div>'
+					var zettel_form = '<h1>HUHU non ktbl</h1><div id="successBox" class="success"></div>'
 						+ '<div id="warningBox" class="warning"></div>'
 						+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
 						+ Drupal.settings.edoweb.zettelServiceUrl
@@ -86,7 +86,7 @@
 					+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
 					+ '/edit';
 		}
-		var zettel_form = '<p>HUHU</p><div id="successBox" class="success"></div>'
+		var zettel_form = '<h1>HUHU1</h1><div id="successBox" class="success"></div>'
 			+ '<div id="warningBox" class="warning"></div>'
 			+ '<iframe class="'+bundle+'" name="'+Date.now()+'" src="' + url + '"'
 		    + ' width="800px" height="1024px" style="border: none;position:relative;" id="iFrame">'
