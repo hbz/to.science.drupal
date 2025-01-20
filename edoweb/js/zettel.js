@@ -78,18 +78,19 @@
 					+ '?id=katalog:'+ bundle + '&format=xml' + '&documentId=' + rid
 					+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
 					+ '/edit';
+					var zettel_form = '<p>I am here</p>';
 			
 		} else {
 			url = Drupal.settings.edoweb.zettelServiceUrl + '/forms'
 					+ '?id=katalog:'+bundle + '&format=xml' + '&documentId=' + rid
 					+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
 					+ '/edit';
+				var zettel_form = '<div id="successBox" class="success"></div>'
+					+ '<div id="warningBox" class="warning"></div>'
+					+ '<iframe class="'+bundle+'" name="'+Date.now()+'" src="' + url + '"'
+				    + ' width="800px" height="1024px" style="border: none;position:relative;" id="iFrame">'
+					+ '<p>iframes are not supported by your browser.</p></iframe>';
 		}
-		var zettel_form = '<h1>HUHU1</h1><div id="successBox" class="success"></div>'
-			+ '<div id="warningBox" class="warning"></div>'
-			+ '<iframe class="'+bundle+'" name="'+Date.now()+'" src="' + url + '"'
-		    + ' width="800px" height="1024px" style="border: none;position:relative;" id="iFrame">'
-			+ '<p>iframes are not supported by your browser.</p></iframe>';
 
 		var rdf = getRdfFromApi(entity);
 		$('.region.region-content').html(rdfBox);
