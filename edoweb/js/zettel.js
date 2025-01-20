@@ -75,13 +75,13 @@
 				+ '/edit';
 		var rdfBox = '<div id="rdfBox" class="data" style="display:none;"></div>';
 		if(bundle == "ktblData"){
-			var url = Drupal.settings.edoweb.formsServiceUrl + '/forms'
+			url = Drupal.settings.edoweb.formsServiceUrl + '/forms'
 					+ '?id=katalog:'+bundle + '&format=xml' + '&documentId=' + rid
 					+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
 					+ '/edit';
 			
 		} else {
-			var url = Drupal.settings.edoweb.zettelServiceUrl + '/forms'
+			url = Drupal.settings.edoweb.zettelServiceUrl + '/forms'
 					+ '?id=katalog:'+bundle + '&format=xml' + '&documentId=' + rid
 					+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
 					+ '/edit';
