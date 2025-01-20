@@ -86,7 +86,7 @@
 					+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
 					+ '/edit';
 		}
-		var zettel_form = '<div id="successBox" class="success"></div>'
+		var zettel_form = '<p>HUHU</p><div id="successBox" class="success"></div>'
 			+ '<div id="warningBox" class="warning"></div>'
 			+ '<iframe class="'+bundle+'" name="'+Date.now()+'" src="' + url + '"'
 		    + ' width="800px" height="1024px" style="border: none;position:relative;" id="iFrame">'
