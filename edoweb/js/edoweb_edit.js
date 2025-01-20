@@ -155,7 +155,7 @@
               var entity_content = $(this.responseText).find('.content');
               var page_title = $(this.responseText).find('h2').text();
               Drupal.attachBehaviors(entity_content);
-              if(bundle=="researchData" || bundle=='article' || bundle=='monograph' || bundle=='journal' || bundle=='webpage'){
+              if(bundle=="researchData" || bundle=='article' || bundle=='monograph' || bundle=='journal' || bundle=='webpage' || bundle =='ktblData'){
              	 Drupal.edoweb.Drupal.zettel.useZettel(bundle,entity,context); 
                }else{
                   activateFields(entity_content.find('.field'), bundle, context);
@@ -206,7 +206,7 @@
                 });
                 var page_title = $(this.responseText).find('h2').text();
                 Drupal.attachBehaviors(entity_content);
-                if(bundle=='researchData' || bundle=='article' || bundle=='monograph' || bundle=='journal' || bundle=='webpage'){
+                if(bundle=='researchData' || bundle=='article' || bundle=='monograph' || bundle=='journal' || bundle=='webpage' || bundle == 'ktblData'){
                 	Drupal.zettel.useZettel(bundle,entity,context);
                 }else{
                 	activateFields(entity_content.find('.field'), bundle, context);
@@ -261,7 +261,7 @@
           // and a real redirect is triggered.
           if (subject.type == 'bnode') {
             entity_load_json('edoweb_basic', resource_uri).onload = function() {
-              if (bundle == 'monograph' || bundle=='webpage' || bundle == 'journal' || bundle=='proceeding'|| bundle=='researchData' ||  bundle=='ktblData'|| bundle=='article') {
+              if (bundle == 'monograph' || bundle=='webpage' || bundle == 'journal' || bundle=='proceeding'|| bundle=='researchData' ||  bundle=='ktblData' || bundle=='article') {
             	 window.location = href;
               } else {
                 localStorage.setItem('cut_entity', this.responseText);
