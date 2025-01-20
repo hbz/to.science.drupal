@@ -24,7 +24,7 @@
 			if (!isEmpty($('.tabs', context))) {
 				loadZettel(bundle, entity, context);
 			} else {
-				if (bundle == 'ktblData'){
+				if (bundle == 'blubb'){
 					var zettel_form = '<h1>HUHU this is ktbl</h1>'
 					+ '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl" target="_blank">'
 					+ Drupal.settings.edoweb.formsServiceUrl + '</a></div>'
@@ -42,7 +42,8 @@
 							;	
 						$('.region.region-content').html(zettel_form);
 				} else { 
-					var zettel_form = '<h1>HUHU non ktbl ' + bundle + ' ' + Drupal.settings.edoweb.formsServiceUrl 
+					var zettel_form = '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl" target="_blank">'
+						+ Drupal.settings.edoweb.formsServiceUrl + '</a></div>'
 						+ '</h1><div id="successBox" class="success"></div>'
 						+ '<div id="warningBox" class="warning"></div>'
 						+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
