@@ -604,6 +604,13 @@
           {
             $(this).remove();
           }
+		  
+		  if('ktblData' == this.getAttribute('data-bundle')){
+			$(this).bind('click', function(e) {
+			  var url = Drupal.settings.edoweb.formsServiceUrl + '/forms/researchdataktbl/' ;
+			  $.get(url); 	
+			})
+		  } else {
 
           $(this).bind('click', function(e) {
             var url = Drupal.settings.basePath + 'resource/add/' + this.getAttribute('data-bundle');
@@ -634,6 +641,7 @@
             });
             return false;
           });
+		  };
         });
 
         var type_selector = html.find('input[type=radio]');
