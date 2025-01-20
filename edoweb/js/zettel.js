@@ -27,6 +27,8 @@
 				if (bundle == "ktblData"){
 					var new_forms = '<div id="successBox" class="success"></div>'
 							+ '<div id="warningBox" class="warning"></div>'
+							+ '<div><a href=">' + Drupal.settings.edoweb.formsServiceUrl + '" target="_blank">'
+							+ Drupal.settings.edoweb.formsServiceUrl + '</a></div>'
 							+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
 							+ Drupal.settings.edoweb.formsServiceUrl
 							+ '/forms'
