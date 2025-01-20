@@ -26,7 +26,7 @@
 			} else {
 				if (bundle != 'ktblData'){
 					var zettel_form = '<h1>HUHU this is ktbl</h1>'
-					+ '<div><a href=">' + Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl" target="_blank">'
+					+ '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl" target="_blank">'
 					+ Drupal.settings.edoweb.formsServiceUrl + '</a></div>'
 							/* + '<div id="warningBox" class="warning"></div>'
 							+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
