@@ -74,7 +74,7 @@
 				+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
 				+ '/edit';
 		var rdfBox = '<div id="rdfBox" class="data" style="display:none;"></div>';
-		if(bundle != "ktblData"){
+		if(bundle == "ktblData"){
 			var url = Drupal.settings.edoweb.formsServiceUrl + '/forms'
 					+ '?id=katalog:'+bundle + '&format=xml' + '&documentId=' + rid
 					+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
