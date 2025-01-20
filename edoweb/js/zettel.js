@@ -26,9 +26,9 @@
 			} else {
 				if (bundle != 'ktblData'){
 					var zettel_form = '<h1>HUHU this is ktbl</h1>'
-					+ '<div><a href=">' + Drupal.settings.edoweb.formsServiceUrl + '/ktblData" target="_blank">';
+					+ '<div><a href=">' + Drupal.settings.edoweb.formsServiceUrl + '/ktblData" target="_blank">'
+					+ Drupal.settings.edoweb.formsServiceUrl + '</a></div>'
 							/* + '<div id="warningBox" class="warning"></div>'
-							+ Drupal.settings.edoweb.formsServiceUrl + '</a></div>'
 							+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
 							+ Drupal.settings.edoweb.formsServiceUrl
 							+ '/forms/researchdataktbl'
@@ -38,7 +38,8 @@
 							+ bundle
 							+ '"'
 							+ ' width="800px" height="1024px" style="border: none;position:relative;" id="iFrame">'
-							+ '<p>iframes are not supported by your browser.</p></iframe>';	*/	
+							+ '<p>iframes are not supported by your browser.</p></iframe>';	*/
+							;	
 						$('.region.region-content').html(zettel_form);
 				} else { 
 					var zettel_form = '<h1>HUHU non ktbl ' + Drupal.settings.edoweb.formsServiceUrl 
