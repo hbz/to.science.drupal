@@ -80,9 +80,7 @@
 		
 		if(bundle == 'ktblData'){
 			url = Drupal.settings.edoweb.formsServiceUrl + '/forms/researchdataktbl'
-					+ '?id=katalog:'+ bundle + '&format=xml' + '&documentId=' + rid
-					+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
-					+ '/edit';
+					+ '/resource/' + rid;
 			
 		} else {
 			url = Drupal.settings.edoweb.zettelServiceUrl + '/forms'

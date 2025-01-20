@@ -67,7 +67,7 @@
        * Translations, these have to be defined here (i.e. in a behaviour)
        * in order for Drupal.t to pick them up.
        */
-      translations['Add ktblData'] = Drupal.t('Add EmiMin Data');
+      translations['Add ktblData'] = Drupal.t('Add ktblData');
       translations['Add researchData'] = Drupal.t('Add researchData');
       translations['Add monograph'] = Drupal.t('Add monograph');
       translations['Add journal'] = Drupal.t('Add journal');
