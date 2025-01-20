@@ -25,8 +25,8 @@
 				loadZettel(bundle, entity, context);
 			} else {
 				if (bundle == 'researchdata'){
-				var zettel_form = '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl" target="_blank">'
-					+ 'Zum Formular für EmiMin</a><br /></div>'
+				var zettel_form = '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl 
+				    + '/researchdataktbl" target="_blank"><h1>Zum Formular für EmiMin</h1></a><br/></div>'
 					+ '<div id="successBox" class="success"></div>'
 					+ '<div id="warningBox" class="warning"></div>'
 					+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
