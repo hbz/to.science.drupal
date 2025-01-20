@@ -24,23 +24,26 @@
 			if (!isEmpty($('.tabs', context))) {
 				loadZettel(bundle, entity, context);
 			} else {
-				if (bundle == 'blubb'){
-					var zettel_form = '<h1>HUHU this is ktbl</h1>'
-					+ '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl" target="_blank">'
-					+ Drupal.settings.edoweb.formsServiceUrl + '</a></div>'
-							/* + '<div id="warningBox" class="warning"></div>'
-							+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
-							+ Drupal.settings.edoweb.formsServiceUrl
-							+ '/forms/researchdataktbl'
-							+ '&topicId='
-							+ Drupal.settings.baseUrl
-							+ '/resource/add/'
-							+ bundle
-							+ '"'
-							+ ' width="800px" height="1024px" style="border: none;position:relative;" id="iFrame">'
-							+ '<p>iframes are not supported by your browser.</p></iframe>';	*/
-							;	
-						$('.region.region-content').html(zettel_form);
+				if (bundle == 'researchdata'){
+				var zettel_form = '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl" target="_blank">'
+					+ 'Zum Formular für EmiMin</a></div>'
+					+ '</h1><div id="successBox" class="success"></div>'
+					+ '<div id="warningBox" class="warning"></div>'
+					+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
+					+ Drupal.settings.edoweb.zettelServiceUrl
+					+ '/forms'
+					+ '?id=katalog:'
+					+ bundle
+					+ '&format=xml'
+					+ '&documentId=_:foo'
+					+ '&topicId='
+					+ Drupal.settings.baseUrl
+					+ '/resource/add/'
+					+ bundle
+					+ '"'
+					+ ' width="800px" height="1024px" style="border: none;position:relative;" id="iFrame">'
+					+ '<p>iframes are not supported by your browser.</p></iframe>';
+				$('.region.region-content').html(zettel_form);
 				} else { 
 					var zettel_form = '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl" target="_blank">'
 						+ Drupal.settings.edoweb.formsServiceUrl + '</a></div>'
