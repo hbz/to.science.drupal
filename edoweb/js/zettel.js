@@ -24,7 +24,7 @@
 			if (!isEmpty($('.tabs', context))) {
 				loadZettel(bundle, entity, context);
 			} else {
-				if (bundle == "ktblData"){
+				if (bundle == 'ktblData'){
 					var zettel_form = '<h1>HUHU ktbl</h1><div id="successBox" class="success"></div>'
 							+ '<div id="warningBox" class="warning"></div>'
 							+ '<div><a href=">' + Drupal.settings.edoweb.formsServiceUrl + '/ktblData" target="_blank">'
@@ -71,13 +71,13 @@
 	function loadZettel(bundle, entity, context) {	
 		var rid = $(entity).attr("resource");
 		var url = Drupal.settings.edoweb.zettelServiceUrl + '/forms'
-				+ '?id=katalog:'+bundle + '&format=xml' + '&documentId=' + rid
+				+ '?id=katalog:'+ bundle + '&format=xml' + '&documentId=' + rid
 				+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
 				+ '/edit';
 		var rdfBox = '<div id="rdfBox" class="data" style="display:none;"></div>';
 		if(bundle == "ktblData"){
 			url = Drupal.settings.edoweb.formsServiceUrl + '/forms'
-					+ '?id=katalog:'+bundle + '&format=xml' + '&documentId=' + rid
+					+ '?id=katalog:'+ bundle + '&format=xml' + '&documentId=' + rid
 					+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
 					+ '/edit';
 			
