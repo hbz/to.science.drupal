@@ -24,8 +24,8 @@
 			if (!isEmpty($('.tabs', context))) {
 				loadZettel(bundle, entity, context);
 			} else {
-				if (bundle == 'ktblData'){
-					var zettel_form = '<h1>HUHU this is ktbl</h1><div id="successBox" class="success"></div>'
+				if (bundle != 'ktblData'){
+					var zettel_form = '<h1>HUHU this is ktbl</h1>'
 							/* + '<div id="warningBox" class="warning"></div>'
 							+ '<div><a href=">' + Drupal.settings.edoweb.formsServiceUrl + '/ktblData" target="_blank">'
 							+ Drupal.settings.edoweb.formsServiceUrl + '</a></div>'
