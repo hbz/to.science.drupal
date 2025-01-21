@@ -21,29 +21,18 @@
 	window.addEventListener("message", handleMessage, false);
 	Drupal.zettel = {
 		useZettel : function useZettel(bundle, entity, context) {
+			ktbl = false;
 			if (!isEmpty($('.tabs', context))) {
 				loadZettel(bundle, entity, context);
 			} else {
-				if (bundle == 'researchData'){
-				var zettel_form = '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl 
-				    + '/researchdataktbl" target="_blank">Zum Formular für EmiMin</a><br/></div>'
-					+ '<div id="successBox" class="success"></div>'
-					+ '<div id="warningBox" class="warning"></div>'
-					+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
-					+ Drupal.settings.edoweb.zettelServiceUrl
-					+ '/forms'
-					+ '?id=katalog:'
-					+ bundle
-					+ '&format=xml'
-					+ '&documentId=_:foo'
-					+ '&topicId='
-					+ Drupal.settings.baseUrl
-					+ '/resource/add/'
-					+ bundle
-					+ '"'
-					+ ' width="800px" height="1024px" style="border: none;position:relative;" id="iFrame">'
-					+ '<p>iframes are not supported by your browser.</p></iframe>';
-				$('.region.region-content').html(zettel_form);
+				if(bundle == 'ktblData'){
+					bundle = 'researchdata';
+					ktbl = true;
+				}
+				if (bundle == 'researchData' && ktbl){
+				var ktblForm = '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl 
+				    + '/researchdataktbl"' + '>Neue EmiMin-Daten</a></div>'
+				$('.region.region-content').html(ktblform);
 				} else { 
 					var zettel_form = '<div id="successBox" class="success"></div>'
 						+ '<div id="warningBox" class="warning"></div>'
