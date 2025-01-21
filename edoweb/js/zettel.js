@@ -28,7 +28,7 @@
 				if(bundle == 'ktblData'){
 					bundle = 'researchData';
 					ktbl = true;
-				}
+				} 
 				if (bundle == 'researchData' && ktbl){
 				var ktblForm = '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl 
 				    + '/researchdataktbl"' + '>Neue EmiMin-Daten</a></div>'

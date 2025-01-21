@@ -605,15 +605,13 @@
             $(this).remove();
           }
 		  
-		  if('ktblData' == this.getAttribute('data-bundle')){
-			$(this).bind('click', function(e) {
-			  var url = Drupal.settings.edoweb.formsServiceUrl + '/forms/researchdataktbl/' ;
-			  $.get(url); 	
-			})
-		  } else {
-
           $(this).bind('click', function(e) {
-            var url = Drupal.settings.basePath + 'resource/add/' + this.getAttribute('data-bundle');
+			var url = 'oops';
+			if(this.getAttribute('data-bundle') == 'ktblData'){
+				url = '<h1>Huhu</h1>';
+			} else {
+				url = Drupal.settings.basePath + 'resource/add/' + this.getAttribute('data-bundle');
+			}
             $.get(url, function(data) {
               var form = $(data).find('.edoweb.entity.edit');
               container.html(form);
@@ -641,7 +639,6 @@
             });
             return false;
           });
-		  };
         });
 
         var type_selector = html.find('input[type=radio]');
