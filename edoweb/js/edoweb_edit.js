@@ -606,12 +606,7 @@
           }
 		  
           $(this).bind('click', function(e) {
-			var url = 'oops';
-			if(this.getAttribute('data-bundle') == 'ktblData'){
-				url = '<h1>Huhu</h1>';
-			} else {
-				url = Drupal.settings.basePath + 'resource/add/' + this.getAttribute('data-bundle');
-			}
+			var url = Drupal.settings.basePath + 'resource/add/' + this.getAttribute('data-bundle');				
             $.get(url, function(data) {
               var form = $(data).find('.edoweb.entity.edit');
               container.html(form);
