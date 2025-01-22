@@ -88,7 +88,7 @@
 		var url = $('div').attr('resource');
 		// var entity = $('div').attr('data-entity-bundle');
 		if($(this).attr('href').endsWith('/edit')){
-			$(this).attr('moin', url);	
+			$(this).attr('moin', 'juhu');	
 			$(this).append('<span>' + ' Män</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
 				// Call for the new forms-API
