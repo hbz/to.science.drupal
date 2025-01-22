@@ -81,7 +81,7 @@
         }
       };
 	  
-	  $('ul.tabs a').append(function() {
+	  $('ul.tabs.primary a', context).append(function() {
 		if($(this).attr('href').endsWith('/edit')){
 			'<span>HUHU</span>';
 			if(!isEmpty($('tr[class="ktbl:emimin"]'))){
