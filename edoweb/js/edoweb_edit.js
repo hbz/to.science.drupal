@@ -23,6 +23,7 @@
     attach: function (context, settings) {
  
 	  var entity = $('div').attr('data-entity-bundle');
+	  var rid = entity.attr('resource');
 
       $('input#edit-delete', context).bind('click', function() {
       // set call for Löschen-Button in Extra-Tab
@@ -87,7 +88,7 @@
 	  // replace old form with new form in case of ktblData
 	  $('.tabs a', context).append(function() {
 		if($(this).attr('href').endsWith('/edit')){
-			$(this).append('<span>' + ' Män</span>');
+			$(this).append('<span>' + rid + ' Män</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
 				// Call for the new forms-API
 				$(this).attr("href", url);	
