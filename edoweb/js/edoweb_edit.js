@@ -97,6 +97,7 @@
 
 	  });
 
+	  $('tr[class="ktbl:emimin"]', context).append('<span>' + ' Män</span>');
 	  
       $('.edoweb.entity.edit', context).each(function() {
 
