@@ -23,6 +23,7 @@
     attach: function (context, settings) {
  
       $('input#edit-delete', context).bind('click', function() {
+      // set call for Löschen-Button in Extra-Tab
         var confirmed = confirm('Möchten Sie den Eintrag unwideruflich löschen?');
         if (confirmed) {
           try {
@@ -79,6 +80,17 @@
           });
         }
       };
+	  
+	  $('ul.tabs.primary a').append(function() {
+		var url = $(this).attr('href').endsWith('/edit');
+		if(!isEmpty($('tr[class="ktbl:emimin"]'))){
+			var rid = $(entity).attr("resource");
+			// Call for the new forms-API
+			$(this).attr("href", Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid);	
+			}
+	  });
+
+	  
       $('.edoweb.entity.edit', context).each(function() {
 
         var bundle = $(this).attr('data-entity-bundle');
@@ -88,15 +100,7 @@
           var instance = Drupal.settings.edoweb.fields[bundle][$(this).val()].instance;
           var field = createField(instance);
           if(bundle=='researchData' || bundle=='article' || bundle== 'monograph' || bundle=='journal' || bundle=='webpage'){
-			 if(!isEmpty($('tr[class="ktbl:emimin"]'))){
-			
-				var rid = $(entity).attr("resource");
-				// Call for the new forms-API
-				$('.primary a[data-bundle="ktblData"]').attr("href", Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid);	
-			
-			} else {
-				Drupal.zettel.useZettel(bundle,entity,context); 
-			}
+			Drupal.zettel.useZettel(bundle,entity,context); 
           	
           }else{
         	  activateFields(field, bundle, context);
