@@ -84,7 +84,9 @@
 	  
 
 	  // replace old form with new form in case of ktblData
-	  $('.tabs a', context).attr('href').endsWith('/edit').attr('href', 'Vollpfosten');
+	  $('.tabs a', context).attr('href').endsWith('/edit').each(function(){
+		$(this).attr('href', 'Vollpfosten');
+	  });
 
       $('.edoweb.entity.edit', context).each(function() {
 
