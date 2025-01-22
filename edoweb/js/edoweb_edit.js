@@ -84,8 +84,17 @@
 	  
 
 	  // replace old form with new form in case of ktblData
-	  $('.tabs a', context).attr('href').endsWith('/edit').each(function(){
-		$(this).attr('href', 'Vollpfosten');
+	  $('.tabs a', context).append(function() {
+		// var entity = $('div').attr('data-entity-bundle');
+		if($(this).attr('href').endsWith('/edit')){
+			$(this).attr('href', 'Vollpfosten');	
+			$(this).append('<span>' + ' Män</span>');
+			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
+				// Call for the new forms-API
+				$(this).attr('href', 'Vollpfosten2');	
+			}			
+		}
+
 	  });
 
       $('.edoweb.entity.edit', context).each(function() {
