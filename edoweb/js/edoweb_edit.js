@@ -22,8 +22,6 @@
   Drupal.behaviors.edoweb_edit = {
     attach: function (context, settings) {
  
-	  var entity = $('div').attr('data-entity-bundle');
-	  var rid = entity.attr('resource');
 
       $('input#edit-delete', context).bind('click', function() {
       // set call for Löschen-Button in Extra-Tab
@@ -84,6 +82,7 @@
         }
       };
 	  
+	  var entity = $('div').attr('data-entity-bundle');
 
 	  // replace old form with new form in case of ktblData
 	  $('.tabs a', context).append(function() {
@@ -91,12 +90,9 @@
 			$(this).append('<span>' + ' Män</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
 				// Call for the new forms-API
-				$(this).attr("href", rid);	
-				}			
+				$(this).attr("href", entity.attr('resource'));	
+			}			
 		}
-		var rid = $(entity).attr('resource');
-		var editUrl = Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid;	
-
 
 	  });
 
