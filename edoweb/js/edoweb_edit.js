@@ -90,7 +90,7 @@
 			$(this).append('<span>' + ' Män</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
 				// Call for the new forms-API
-				$(this).attr("href", entity.attr('resource'));	
+				$(this).attr('href', 'Vollpfosten');	
 			}			
 		}
 
