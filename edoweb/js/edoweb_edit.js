@@ -83,9 +83,6 @@
 	  
 
 	  $('.tabs a', context).append(function() {
-		var rid = $(entity).attr('resource');
-		var editUrl = Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid;	
-
 		if($(this).attr('href').endsWith('/edit')){
 			$(this).append('<span>' +  ' Män</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
