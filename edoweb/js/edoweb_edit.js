@@ -82,14 +82,21 @@
       };
 	  
 
+	  // replace old form with new form in case of ktblData
 	  $('.tabs a', context).append(function() {
+		var entity = $('div').attr("data-entity-bundle");
+		var pid = entity.attr(resource);
 		if($(this).attr('href').endsWith('/edit')){
-			$(this).append('<span>' +  ' Män</span>');
+			$(this).append('<span>' + pid+ ' Män</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
 				// Call for the new forms-API
 				$(this).attr("href", url);	
 				}			
 		}
+		var rid = $(entity).attr('resource');
+		var editUrl = Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid;	
+
+
 	  });
 
 	  
