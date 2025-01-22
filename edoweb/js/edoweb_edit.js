@@ -87,7 +87,7 @@
 	  $('.tabs a', context).append(function() {
 		// var entity = $('div').attr('data-entity-bundle');
 		if($(this).attr('href').endsWith('/edit')){
-			$(this).attr('href', 'Vollpfosten');	
+			$(this).attr('href', $('div').attr('resource'));	
 			$(this).append('<span>' + ' Män</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
 				// Call for the new forms-API
