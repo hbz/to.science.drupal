@@ -87,7 +87,7 @@
 	  $('.tabs a', context).append(function() {
 
 		if($(this).attr('href').endsWith('/edit')){
-			$(this).append('<span>' + editUrl + rid + ' Män</span>');
+			$(this).append('<span>' +  ' Män</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
 				// Call for the new forms-API
 				$(this).attr("href", url);	
