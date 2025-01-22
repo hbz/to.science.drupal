@@ -21,35 +21,11 @@
 	window.addEventListener("message", handleMessage, false);
 	Drupal.zettel = {
 		useZettel : function useZettel(bundle, entity, context) {
-			ktbl = false;
+
 			if (!isEmpty($('.tabs', context))) {
+				// call loadZettel function from  Bearbeiten-Tab -> resource ID (pid) required 
 				loadZettel(bundle, entity, context);
 			} else {
-				if(bundle == 'ktblData'){
-					bundle = 'researchData';
-					ktbl = true;
-				} 
-				if (bundle == 'researchData' && ktbl){
-				var ktblForm = '<div><a href="' + Drupal.settings.edoweb.formsServiceUrl 
-				    + '/researchdataktbl"' + '>Neue EmiMin-Daten</a></div>'
-					+ '<div id="successBox" class="success"></div>'
-					+ '<div id="warningBox" class="warning"></div>'
-					+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
-					+ Drupal.settings.edoweb.zettelServiceUrl
-					+ '/forms'
-					+ '?id=katalog:'
-					+ bundle
-					+ '&format=xml'
-					+ '&documentId=_:foo'
-					+ '&topicId='
-					+ Drupal.settings.baseUrl
-					+ '/resource/add/'
-					+ bundle
-					+ '"'
-					+ ' width="800px" height="1024px" style="border: none;position:relative;" id="iFrame">'
-					+ '<p>iframes are not supported by your browser.</p></iframe>';
-				$('.region.region-content').html(ktblform);
-				} else { 
 					var zettel_form = '<div id="successBox" class="success"></div>'
 						+ '<div id="warningBox" class="warning"></div>'
 						+ '<iframe class="'+bundle+'"name="'+Date.now()+'" src="'
@@ -68,7 +44,6 @@
 						+ '<p>iframes are not supported by your browser.</p></iframe>';
 					$('.region.region-content').html(zettel_form);
 				}
-			}
 		}
 	}
 	
@@ -80,8 +55,6 @@
 				+ '&topicId=' + Drupal.settings.baseUrl + '/resource/' + rid
 				+ '/edit';
 		var rdfBox = '<div id="rdfBox" class="data" style="display:none;"></div>';
-
-				var zettel_form = '<p>I am here</p>';
 		
 		if(bundle == 'ktblData'){
 			url = Drupal.settings.edoweb.formsServiceUrl + '/forms/researchdataktbl'
