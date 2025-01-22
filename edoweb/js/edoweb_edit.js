@@ -81,9 +81,9 @@
         }
       };
 	  
-	  $('ul.tabs.primary a', context).append(function() {
+	  $('.tabs a', context).append(function() {
 		if($(this).attr('href').endsWith('/edit')){
-			'<span>HUHU</span>';
+			$(this).append('<span>HUHU</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]'))){
 				var rid = $(entity).attr("resource");
 				// Call for the new forms-API
