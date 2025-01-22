@@ -88,10 +88,10 @@
 	  // replace old form with new form in case of ktblData
 	  $('.tabs a', context).append(function() {
 		if($(this).attr('href').endsWith('/edit')){
-			$(this).append('<span>' + rid + ' Män</span>');
+			$(this).append('<span>' + ' Män</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
 				// Call for the new forms-API
-				$(this).attr("href", url);	
+				$(this).attr("href", rid);	
 				}			
 		}
 		var rid = $(entity).attr('resource');
