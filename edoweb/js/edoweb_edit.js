@@ -81,10 +81,13 @@
         }
       };
 	  
+	  var rid = $(entity).attr("resource");
+	  var editUrl = Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid;	
+
 	  $('.tabs a', context).append(function() {
 
 		if($(this).attr('href').endsWith('/edit')){
-			$(this).append('<span>HUHU</span>');
+			$(this).append('<span>' + editUrl + '</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
 				// Call for the new forms-API
 				$(this).attr("href", url);	
