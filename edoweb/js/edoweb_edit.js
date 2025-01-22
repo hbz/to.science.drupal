@@ -85,9 +85,10 @@
 
 	  // replace old form with new form in case of ktblData
 	  $('.tabs a', context).append(function() {
+		var url = $('div').attr('resource');
 		// var entity = $('div').attr('data-entity-bundle');
 		if($(this).attr('href').endsWith('/edit')){
-			$(this).attr('href', $('div').attr('resource'));	
+			$(this).attr('href', url);	
 			$(this).append('<span>' + ' Män</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
 				// Call for the new forms-API
