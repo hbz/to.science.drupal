@@ -81,13 +81,15 @@
         }
       };
 	  
-	  $('ul.tabs.primary a').append(function() {
-		var url = $(this).attr('href').endsWith('/edit');
-		if(!isEmpty($('tr[class="ktbl:emimin"]'))){
-			var rid = $(entity).attr("resource");
-			// Call for the new forms-API
-			$(this).attr("href", Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid);	
-			}
+	  $('ul.tabs a').append(function() {
+		if($(this).attr('href').endsWith('/edit')){
+			'<span>HUHU</span>';
+			if(!isEmpty($('tr[class="ktbl:emimin"]'))){
+				var rid = $(entity).attr("resource");
+				// Call for the new forms-API
+				$(this).attr("href", Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid);	
+				}			
+		}
 	  });
 
 	  
