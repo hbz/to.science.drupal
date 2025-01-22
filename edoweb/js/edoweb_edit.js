@@ -97,7 +97,7 @@
 
 	  });
 
-	  $('tr.ktbl:emimin', context).append('<tr><td>Huhu</td></tr>');
+	  $('tr.[class|="ktbl"]', context).append('<tr><td>Huhu</td></tr>');
 	  
       $('.edoweb.entity.edit', context).each(function() {
 
