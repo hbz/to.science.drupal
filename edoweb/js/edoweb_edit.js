@@ -88,13 +88,16 @@
           var instance = Drupal.settings.edoweb.fields[bundle][$(this).val()].instance;
           var field = createField(instance);
           if(bundle=='researchData' || bundle=='article' || bundle== 'monograph' || bundle=='journal' || bundle=='webpage'){
-        	 Drupal.zettel.useZettel(bundle,entity,context); 
-          	
 			 if(!isEmpty($('tr[class="ktbl:emimin"]'))){
+			
 				var rid = $(entity).attr("resource");
 				// Call for the new forms-API
-				$('.form-type-item a[data-bundle="ktblData"]').attr("href", Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid);	
+				$('.primary a[data-bundle="ktblData"]').attr("href", Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid);	
+			
+			} else {
+				Drupal.zettel.useZettel(bundle,entity,context); 
 			}
+          	
           }else{
         	  activateFields(field, bundle, context);
           }
