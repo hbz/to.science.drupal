@@ -82,12 +82,15 @@
       };
 	  
 	  $('.tabs a', context).append(function() {
+
+		var rid = $(entity).attr("resource");
+		var url = Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid;	
+
 		if($(this).attr('href').endsWith('/edit')){
 			$(this).append('<span>HUHU</span>');
-			if(!isEmpty($('tr[class="ktbl:emimin"]'))){
-				var rid = $(entity).attr("resource");
+			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
 				// Call for the new forms-API
-				$(this).attr("href", Drupal.settings.edoweb.formsServiceUrl + '/researchdataktbl/' + rid);	
+				$(this).attr("href", url);	
 				}			
 		}
 	  });
