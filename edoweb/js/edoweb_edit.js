@@ -22,6 +22,8 @@
   Drupal.behaviors.edoweb_edit = {
     attach: function (context, settings) {
  
+	  var entity = $('div').attr('data-entity-bundle');
+
       $('input#edit-delete', context).bind('click', function() {
       // set call for Löschen-Button in Extra-Tab
         var confirmed = confirm('Möchten Sie den Eintrag unwideruflich löschen?');
@@ -84,8 +86,6 @@
 
 	  // replace old form with new form in case of ktblData
 	  $('.tabs a', context).append(function() {
-		var entity = $.attr("data-entity-bundle");
-		var pid = entity.attr(resource);
 		if($(this).attr('href').endsWith('/edit')){
 			$(this).append('<span>' + ' Män</span>');
 			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
