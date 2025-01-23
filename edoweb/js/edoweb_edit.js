@@ -23,10 +23,10 @@
 		attach: function(context, settings) {
 			
 			// add missing classes to <a> in menu tabs
-			$('tabs a[href=$"/access"]').addClass('access');
-			$('tabs a[href=$"/admin"]').addClass('admin');
-			$('tabs a[href=$"/edit"]').addClass('edit');
-			$('tabs a[href=$"/status"]').addClass('status');
+			$('tabs a[href$="/access"]').addClass('access');
+			$('tabs a[href$="/admin"]').addClass('admin');
+			$('tabs a[href$="/edit"]').addClass('edit');
+			$('tabs a[href$="/status"]').addClass('status');
 			
 			// replace formsUrl for integrate new forms
 			$('#main', context).each(function(){
