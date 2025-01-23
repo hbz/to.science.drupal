@@ -38,7 +38,7 @@
 				})
 				
 				if(emimin >= 1){
-					$('.edit').attr('href', resourceId);	
+					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/researchdataktbl/' + resourceId);	
 				}
 			})
 
