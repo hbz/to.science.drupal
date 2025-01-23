@@ -84,19 +84,21 @@
 	  
 
 	  // replace old form with new form in case of ktblData
-	  $('.tabs a', context).append(function() {
-		var url = $('div').attr('resource');
-		// var entity = $('div').attr('data-entity-bundle');
-		if($(this).attr('href').endsWith('/edit')){
-			$(this).attr('moin', url);	
-			$(this).append('<span>' + ' Män</span>');
-			if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
-				// Call for the new forms-API
-				$(this).attr('href', 'Vollpfosten2');	
-			}			
-		}
-
+	  $('content', context).each(function(){
+		
+		var resourceId = $('div').attr('resource');
+		
+		var editUrl = '/resource/' + resourceId + '/edit';
+		if(!isEmpty($('tr[class="ktbl:emimin"]', context))){
+			editUrl = Drupal.settings.edoweb.formsServiceUrl + '/' + bundle + 'ktbl//' + resourceId;
+			}
+			
+		$('.tabs a', context).attr('href').endsWith('/edit').each(function(){
+			$(this).attr('href', editUrl);
+		});
+		
 	  });
+	  
 
       $('.edoweb.entity.edit', context).each(function() {
 
