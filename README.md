@@ -85,7 +85,8 @@ On your local computer:
     scp -p toscience@servername:/opt/toscience/drupal/sites/all/themes/your-theme/de.po .
 
 Import the language file to your toscience Drupal installation:
-Goto to https://localhost/admin/config/regional/translate/import
+Goto to https://localhost/admin/config/regional/translate/import .
+
 Upload the file from your local computer and press "Import" .
 
 
