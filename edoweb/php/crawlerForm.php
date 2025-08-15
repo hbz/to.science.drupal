@@ -157,6 +157,14 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
     console_log('issetRobotsPolicy='.(@$conf['robotsPolicy']!==null));
     console_log('robotsPolicy='.@$conf['robotsPolicy']);
     
+    $form['notices'] = array(
+        '#type' => 'textarea',
+        '#default_value' => @$conf['notices'],
+        '#weight' => 55,
+        '#title' => t('Notizen'),
+        '#required' => FALSE,
+    );
+
     $form['crawlerSelection'] = array(
         '#type' => 'select',
         '#title' => t('Crawler-Auswahl'),
@@ -378,6 +386,7 @@ function edoweb_basic_crawler_form_submit($form, &$form_state) {
         . '-' . $form_state['values']['startDate']['day']));
     $conf['interval'] = $form_state['values']['interval'];
     $conf['robotsPolicy'] = $form_state['values']['robotsPolicy'];
+    $conf['notices'] = $form_state['values']['notices'];
     $conf['crawlerSelection'] = $form_state['values']['crawlerSelection'];
     if( $conf['crawlerSelection'] == 'wpull' ) {
         if( isset($form_state['values']['urlExcluded00']) && $form_state['values']['urlExcluded00'] != '') {
