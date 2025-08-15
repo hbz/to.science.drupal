@@ -675,6 +675,7 @@ function _edoweb_link_lastmodified($entity) {
   }
 }
 
+
 function _edoweb_compact_view($entity) {
   $entity_view = edoweb_basic_view($entity, 'compact');
   return drupal_render($entity_view);
@@ -937,6 +938,12 @@ function _edoweb_lastmodified($remote_id) {
     $_SESSION['messages'] = $old_msg;
     return $last_modified;
 }
+
+function _edoweb_crawler_status($entity) {
+    $status = edoweb_basic_status($entity);
+    return $status['webgatherer']['_crawlControllerState']['#markup'];
+}
+
 
 
 /**
