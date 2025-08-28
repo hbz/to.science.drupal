@@ -825,7 +825,7 @@ function _edoweb_is_editable_entity($entity, $permissions = null) {
 }
 
 function _edoweb_is_webpage_entity($entity, $permissions = null) {
-  return 'webpage' == $entity->bundle()
+  return ('webpage' == $entity->bundle() || 'version' == $entity->bundle() )
       && _edoweb_is_editable_entity($entity, $permissions);
 }
 
