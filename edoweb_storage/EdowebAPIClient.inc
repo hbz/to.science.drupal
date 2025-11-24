@@ -122,6 +122,12 @@ class EdowebAPIClient implements EdowebAPIClientInterface
         return $this->_http_post($http_url);
     }
 
+    public function exportWS($entity, $zielpid)
+    {
+        $http_url = sprintf('%s/resource/%s/exportWS?zielserverPid=%s', $this->__edoweb_api_host, $entity->remote_id, $zielpid);
+        return $this->_http_post($http_url);
+    }
+
     /*
      * Save an entity to the API
      *

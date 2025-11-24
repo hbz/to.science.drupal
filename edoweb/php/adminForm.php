@@ -25,6 +25,9 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
     
     //  if (_is_edoweb_entity($entity)) {
     $api = new EdowebAPIClient();
+    if (!$conf = $api->getCrawlerConfiguration($entity)) {
+        $conf = array();
+    }
     $has_urn = field_get_items('edoweb_basic', $entity, 'field_edoweb_urn') ? TRUE : FALSE;
     if (!$has_urn) {
         $form['actions']['urn'] = array(
@@ -55,6 +58,32 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         '#submit' => array('edoweb_basic_admin_delete'),
         '#weight' => 200,
     );
+
+    $form['actions']['exportWS'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Export Webschnitt'),
+        '#weight' => 300,
+    );
+    $form['actions']['exportWS']['zielserver'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Zielserver'),
+        '#name' => 'zielserver',
+        '#attributes' => array('disabled' => 'disabled'),
+        '#value' => t('https://edoweb-rlp.de'),
+    );
+    $form['actions']['exportWS']['zielpid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Ziel Webauftritt PID'),
+        '#name' => 'zielpid',
+        '#default_value' => @$conf['zielserverPid'] == null ? 'edoweb:NNNN' : @$conf['zielserverPid'],
+        '#required' => TRUE,
+    );
+    $form['actions']['exportWS']['doExportWS'] = array(
+        '#type' => 'submit',
+        '#value' => t('Export Webschnitt'),
+        '#submit' => array('edoweb_basic_admin_exportws'),
+    );
+
     $form['transformers'] = array(
         '#type' => 'fieldset',
         '#title' => t('Transformers'),
@@ -159,4 +188,15 @@ function edoweb_basic_admin_add_doi( $form , &$form_state ) {
     $entity = $form_state['values']['basic_entity'];
     $api = new EdowebAPIClient();
     $api->addDOI($entity);
+}
+
+/**
+ * Form Export Webschnitt
+ *
+ */
+function edoweb_basic_admin_exportws( $form , &$form_state ) {
+    $entity = $form_state['values']['basic_entity'];
+    $zielpid = $form_state['values']['actions']['exportWS']['zielpid'];
+    $api = new EdowebAPIClient();
+    $api->exportWS($entity, $zielpid);
 }
