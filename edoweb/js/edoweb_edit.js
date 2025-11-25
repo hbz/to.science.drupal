@@ -38,8 +38,12 @@
 					emimin =1;
 				})
 				
-				if(bundle == 'monograph' || 'article' || 'researchData'){
+				if(bundle == 'article' || 'researchData'){
 					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/'+ bundle +'/'+ resourceId);
+				}
+				
+				if(bundle == 'monograph'){
+					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/monograph/');
 				}
 				
 				if(emimin >= 1){
