@@ -31,9 +31,11 @@
 			// replace formsUrl for integrate new forms
 			$('#main', context).each(function(){
 
+				var bundle = $(this).attr('data-entity-bundle');
 				var resourceId = $('.table').attr('resource');
 				if(bundle == 'ktblData' || 'researchData' || 'monograph' || 'article'){
-					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl + '/' + bundle + '/' + resourceId);						
+					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl + '/' + bundle + '/' + resourceId);	
+					
 				}				
 			})
 
