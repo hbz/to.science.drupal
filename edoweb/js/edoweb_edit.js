@@ -31,16 +31,16 @@
 			// replace formsUrl for integrate new forms
 			$('#main', context).each(function(){
 				
-				var bundle = $(this).attr('data-entity-bundle');
+				var bundle = $('.edoweb.entity.default').attr('data-entity-bundle');
 				var resourceId = $('.table').attr('resource');				
 				var emimin = 0;
 				$('tr.ktbl', context).each(function(){
 					emimin =1;
 				})
 				
-				//if(bundle == 'monograph' || 'article' || 'researchData'){
-				//	$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/'+ bundle +'/'+ resourceId);
-				//}
+				if(bundle == 'monograph' || 'article' || 'researchData'){
+					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/'+ bundle +'/'+ resourceId);
+				}
 				
 				if(emimin >= 1){
 					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/ktbldata/' + resourceId);	
