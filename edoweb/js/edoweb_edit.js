@@ -111,7 +111,8 @@
 					var instance = Drupal.settings.edoweb.fields[bundle][$(this).val()].instance;
 					var field = createField(instance);
 					if (bundle == 'researchData' || bundle == 'article' || bundle == 'monograph' || bundle == 'journal' || bundle == 'webpage') {
-						Drupal.zettel.useZettel(bundle, entity, context);
+						// Drupal.zettel.useZettel(bundle, entity, context);
+						$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl + "/" + bundle + "/" + resourceId);
 
 					} else {
 						activateFields(field, bundle, context);
