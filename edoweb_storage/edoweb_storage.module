@@ -153,14 +153,14 @@ function edoweb_storage_configuration_form($form, &$form_state) {
     '#required' => FALSE,
   );
 
-  // Text field for deepviewer URL.
+  // Text field for new Forms URL.
   $form['edoweb_forms_url'] = array(
       '#type' => 'textfield',
       '#default_value' => variable_get(
           'edoweb_forms_url',
-          variable_get('edoweb_api_host') . '/ktbldata'
+          variable_get('edoweb_api_host')
           ),
-      '#title' => t('ktbl Data Form URL'),
+      '#title' => t('Spring Boot based Form URL'),
       '#description' => t('The full URL to the new forms service'),
       '#size' => 40,
       '#maxlength' => 120,
