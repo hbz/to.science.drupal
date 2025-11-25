@@ -41,6 +41,7 @@
 				if(bundle == 'monograph' || 'article' || 'researchData'){
 					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/'+ bundle +'/'+ resourceId);
 				}
+				
 				if(emimin >= 1){
 					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/ktbldata/' + resourceId);	
 				}
