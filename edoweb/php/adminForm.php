@@ -59,29 +59,35 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         '#weight' => 200,
     );
 
-    $form['actions']['exportWS'] = array(
+    $form['actions']['importWS'] = array(
         '#type' => 'fieldset',
-        '#title' => t('Export Webschnitt'),
+        '#title' => t('Import Webschnitt'),
         '#weight' => 300,
     );
-    $form['actions']['exportWS']['zielserver'] = array(
+    $form['actions']['importWS']['quellserver'] = array(
         '#type' => 'textfield',
-        '#title' => t('Zielserver'),
-        '#name' => 'zielserver',
+        '#title' => t('Quellserver'),
+        '#name' => 'quellserver',
         '#attributes' => array('disabled' => 'disabled'),
-        '#value' => t('https://edoweb-rlp.de'),
+        '#value' => t('edoweb-rlp.de'),
     );
-    $form['actions']['exportWS']['zielpid'] = array(
+    $form['actions']['importWS']['quellwebpage'] = array(
         '#type' => 'textfield',
-        '#title' => t('Ziel Webauftritt PID'),
-        '#name' => 'zielpid',
-        '#default_value' => @$conf['zielserverPid'] == null ? 'edoweb:NNNN' : @$conf['zielserverPid'],
+        '#title' => t('Quellserver Website PID'),
+        '#name' => 'quellwebpage',
+        '#default_value' => @$conf['quellserverWebpagePid'] == null ? 'edoweb:NNNN' : @$conf['quellserverWebpagePid'],
+    );
+    $form['actions']['importWS']['quellwebschnitt'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Quellserver Webschnitt PID'),
+        '#name' => 'quellwebschnitt',
+        '#default_value' => @$conf['quellserverWebschnittPid'] == null ? 'edoweb:NNNN' : @$conf['quellserverWebschnittPid'],
         '#required' => TRUE,
     );
-    $form['actions']['exportWS']['doExportWS'] = array(
+    $form['actions']['importWS']['doImportWS'] = array(
         '#type' => 'submit',
-        '#value' => t('Export Webschnitt'),
-        '#submit' => array('edoweb_basic_admin_exportws'),
+        '#value' => t('Importiere Webschnitt'),
+        '#submit' => array('edoweb_basic_admin_importws'),
     );
 
     $form['transformers'] = array(
@@ -194,9 +200,10 @@ function edoweb_basic_admin_add_doi( $form , &$form_state ) {
  * Form Export Webschnitt
  *
  */
-function edoweb_basic_admin_exportws( $form , &$form_state ) {
+function edoweb_basic_admin_importws( $form , &$form_state ) {
     $entity = $form_state['values']['basic_entity'];
-    $zielpid = $form_state['values']['actions']['exportWS']['zielpid'];
+    $quellwebpage = $form_state['values']['actions']['importWS']['quellwebpage'];
+    $quellwebschnitt = $form_state['values']['actions']['importWS']['quellwebschnitt'];
     $api = new EdowebAPIClient();
-    $api->exportWS($entity, $zielpid);
+    $api->importWS($entity, $quellwebpage, $quellwebschnitt);
 }
