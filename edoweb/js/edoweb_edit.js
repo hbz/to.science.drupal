@@ -110,7 +110,7 @@
 				additional_fields.change(function() {
 					var instance = Drupal.settings.edoweb.fields[bundle][$(this).val()].instance;
 					var field = createField(instance);
-					if (bundle == 'researchData' || bundle == 'article' || bundle == 'monograph' || bundle == 'journal' || bundle == 'webpage') {
+					if (bundle == 'ktblData' || 'researchData' || bundle == 'article' || bundle == 'monograph') {
 						// Drupal.zettel.useZettel(bundle, entity, context);
 						$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl + "/" + bundle + "/" + resourceId);
 
