@@ -34,9 +34,9 @@
 				var bundle = $(this).attr('data-entity-bundle');
 				var resourceId = $('.table').attr('resource');				
 				var emimin = 0;
-				$('tr.ktbl', context).each(function(){
-					emimin =1;
-				})
+				//$('tr.ktbl', context).each(function(){
+					//emimin =1;
+				//})
 				
 				if(bundle == 'monograph' || 'article' || 'researchData'){
 					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/'+ bundle +'/'+ resourceId);
