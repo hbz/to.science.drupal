@@ -28,7 +28,6 @@
 			$('.tabs a[href$="/edit"]').addClass('edit');
 			$('.tabs a[href$="/status"]').addClass('status');
 			
-			var bundle = $(this).attr('data-entity-bundle');
 			// replace formsUrl for integrate new forms
 			$('#main', context).each(function(){
 
