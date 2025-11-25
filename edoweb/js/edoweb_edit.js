@@ -31,15 +31,11 @@
 			// replace formsUrl for integrate new forms
 			$('#main', context).each(function(){
 
-				var resourceId = $('.table').attr('resource');				
-				var emimin = 0;
-				$('tr.ktbl', context).each(function(){
-					emimin =1;
-				})
-				
-				if(emimin >= 1){
-					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/ktbldata/' + resourceId);	
-				}
+				var bundle = $(this).attr('data-entity-bundle');
+				var resourceId = $('.table').attr('resource');
+				if(bundle == 'ktblData' || 'researchData' || 'monograph' || 'article'){
+					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl + '/' + bundle + '/' + resourceId);						
+				}				
 			})
 
 
@@ -110,7 +106,7 @@
 				additional_fields.change(function() {
 					var instance = Drupal.settings.edoweb.fields[bundle][$(this).val()].instance;
 					var field = createField(instance);
-					if (bundle == 'ktblData' || 'researchData' || bundle == 'article' || bundle == 'monograph') {
+					if (bundle == 'researchData' || bundle == 'article' || bundle == 'monograph') {
 						// Drupal.zettel.useZettel(bundle, entity, context);
 						$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl + "/" + bundle + "/" + resourceId);
 
