@@ -122,9 +122,9 @@ class EdowebAPIClient implements EdowebAPIClientInterface
         return $this->_http_post($http_url);
     }
 
-    public function exportWS($entity, $zielpid)
+    public function importWS($entity, $quellwebpage, $quellwebschnitt)
     {
-        $http_url = sprintf('%s/resource/%s/exportWS?zielserverPid=%s', $this->__edoweb_api_host, $entity->remote_id, $zielpid);
+        $http_url = sprintf('%s/resource/%s/importWS?quellserverWebpagePid=%s&quellserverWebschnittPid=%s', $this->__edoweb_api_host, $entity->remote_id, $quellwebpage, $quellwebschnitt);
         return $this->_http_post($http_url);
     }
 

@@ -202,8 +202,8 @@ function edoweb_basic_admin_add_doi( $form , &$form_state ) {
  */
 function edoweb_basic_admin_importws( $form , &$form_state ) {
     $entity = $form_state['values']['basic_entity'];
-    $quellwebpage = $form_state['values']['actions']['importWS']['quellwebpage'];
-    $quellwebschnitt = $form_state['values']['actions']['importWS']['quellwebschnitt'];
+    $quellwebpage = $form_state['values']['quellwebpage'];
+    $quellwebschnitt = $form_state['values']['quellwebschnitt'];
     $api = new EdowebAPIClient();
     $api->importWS($entity, $quellwebpage, $quellwebschnitt);
 }
