@@ -25,9 +25,6 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
     
     //  if (_is_edoweb_entity($entity)) {
     $api = new EdowebAPIClient();
-    if (!$conf = $api->getCrawlerConfiguration($entity)) {
-        $conf = array();
-    }
     $has_urn = field_get_items('edoweb_basic', $entity, 'field_edoweb_urn') ? TRUE : FALSE;
     if (!$has_urn) {
         $form['actions']['urn'] = array(
@@ -59,36 +56,46 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         '#weight' => 200,
     );
 
-    $form['actions']['importWS'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Import Webschnitt'),
-        '#weight' => 300,
-    );
-    $form['actions']['importWS']['quellserver'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Quellserver'),
-        '#name' => 'quellserver',
-        '#attributes' => array('disabled' => 'disabled'),
-        '#value' => t('edoweb-rlp.de'),
-    );
-    $form['actions']['importWS']['quellwebpage'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Quellserver Website PID'),
-        '#name' => 'quellwebpage',
-        '#default_value' => @$conf['quellserverWebpagePid'] == null ? 'edoweb:NNNN' : @$conf['quellserverWebpagePid'],
-    );
-    $form['actions']['importWS']['quellwebschnitt'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Quellserver Webschnitt PID'),
-        '#name' => 'quellwebschnitt',
-        '#default_value' => @$conf['quellserverWebschnittPid'] == null ? 'edoweb:NNNN' : @$conf['quellserverWebschnittPid'],
-        '#required' => TRUE,
-    );
-    $form['actions']['importWS']['doImportWS'] = array(
-        '#type' => 'submit',
-        '#value' => t('Importiere Webschnitt'),
-        '#submit' => array('edoweb_basic_admin_importws'),
-    );
+    if ($conf = $api->getCrawlerConfiguration($entity)) {
+    	$form['actions']['importWS'] = array(
+        	'#type' => 'fieldset',
+        	'#title' => t('Import Webschnitt'),
+        	'#weight' => 300,
+    	);
+    	$form['actions']['importWS']['quellserver'] = array(
+        	'#type' => 'textfield',
+        	'#title' => t('Quellserver'),
+        	'#name' => 'quellserver',
+        	'#attributes' => array('disabled' => 'disabled'),
+        	'#value' => t('edoweb-rlp.de'),
+    	);
+    	$form['actions']['importWS']['quellwebpage'] = array(
+        	'#type' => 'textfield',
+        	'#title' => t('Quellserver Website PID'),
+        	'#name' => 'quellwebpage',
+        	'#default_value' => @$conf['quellserverWebpagePid'] == null ? 'edoweb:NNNN' : @$conf['quellserverWebpagePid'],
+    	);
+   	if( $entity->bundle() == 'version') {
+        	$form['actions']['importWS']['quellwebpage']['#attributes'] = array('readonly' => 'readonly');
+    	}
+    	$form['actions']['importWS']['quellwebschnitt'] = array(
+        	'#type' => 'textfield',
+        	'#title' => t('Quellserver Webschnitt PID'),
+        	'#name' => 'quellwebschnitt',
+        	'#default_value' => @$conf['quellserverWebschnittPid'] == null ? 'edoweb:NNNN' : @$conf['quellserverWebschnittPid'],
+        	'#required' => TRUE,
+    	);
+   	if( $entity->bundle() == 'version') {
+        	$form['actions']['importWS']['quellwebschnitt']['#attributes'] = array('readonly' => 'readonly');
+    	}
+   	if( $entity->bundle() != 'version') {
+    		$form['actions']['importWS']['doImportWS'] = array(
+        		'#type' => 'submit',
+        		'#value' => t('Importiere Webschnitt'),
+        		'#submit' => array('edoweb_basic_admin_importws'),
+    		);
+    	}
+    }
 
     $form['transformers'] = array(
         '#type' => 'fieldset',
