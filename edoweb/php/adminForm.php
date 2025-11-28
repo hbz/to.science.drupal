@@ -88,6 +88,15 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
    	if( $entity->bundle() == 'version') {
         	$form['actions']['importWS']['quellwebschnitt']['#attributes'] = array('readonly' => 'readonly');
     	}
+	$form['actions']['importWS']['deleteQuellserverWebschnitt'] = array(
+        	'#type' => 'checkbox',
+        	'#title' => t('Lösche Webschnitt auf Quellserver'),
+        	'#name' => 'deleteQuellserverWebschnitt',
+        	'#default_value' => @$conf['deleteQuellserverWebschnitt'] == false ? 0 : 1,
+    	);
+    	if( $entity->bundle() == 'version') {
+        	$form['actions']['importWS']['deleteQuellserverWebschnitt']['#attributes'] = array('disabled' => 'disabled');
+    	}   
    	if( $entity->bundle() != 'version') {
     		$form['actions']['importWS']['doImportWS'] = array(
         		'#type' => 'submit',
@@ -211,6 +220,7 @@ function edoweb_basic_admin_importws( $form , &$form_state ) {
     $entity = $form_state['values']['basic_entity'];
     $quellwebpage = $form_state['values']['quellwebpage'];
     $quellwebschnitt = $form_state['values']['quellwebschnitt'];
+    $deleteQuellserverWebschnitt = $form_state['values']['deleteQuellserverWebschnitt'];
     $api = new EdowebAPIClient();
-    $api->importWS($entity, $quellwebpage, $quellwebschnitt);
+    $api->importWS($entity, $quellwebpage, $quellwebschnitt, $deleteQuellserverWebschnitt);
 }
