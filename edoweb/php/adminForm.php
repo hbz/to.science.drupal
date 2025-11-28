@@ -56,7 +56,8 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         '#weight' => 200,
     );
 
-    if ($conf = $api->getCrawlerConfiguration($entity)) {
+    $toscience_import_server_name = variable_get('toscience_import_server_name');
+    if ($toscience_import_server_name != '' && $conf = $api->getCrawlerConfiguration($entity)) {
     	$form['actions']['importWS'] = array(
         	'#type' => 'fieldset',
         	'#title' => t('Import Webschnitt'),
@@ -67,7 +68,7 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         	'#title' => t('Quellserver'),
         	'#name' => 'quellserver',
         	'#attributes' => array('disabled' => 'disabled'),
-        	'#value' => t('edoweb-rlp.de'),
+        	'#default_value' => $toscience_import_server_name
     	);
     	$form['actions']['importWS']['quellwebpage'] = array(
         	'#type' => 'textfield',
