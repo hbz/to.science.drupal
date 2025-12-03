@@ -50,14 +50,33 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         '#weight' => 50,
     );
     $form['actions']['delete'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Delete'),
+        '#weight' => 200,
+    );
+    $form['actions']['delete']['keepWebarchives'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('behalte Webarchive'),
+        '#name' => 'keepWebarchives',
+        '#default_value' => FALSE,
+    );
+    if (! $conf = $api->getCrawlerConfiguration($entity)) {
+        $form['actions']['delete']['keepWebarchives']['#attributes'] = array('disabled' => 'disabled');
+    }
+    $form['actions']['delete']['purge'] = array(
+       	'#type' => 'checkbox',
+       	'#title' => t('endgültig löschen'),
+       	'#name' => 'purge',
+       	'#default_value' => FALSE,
+    	);
+    $form['actions']['delete']['doDelete'] = array(
         '#type' => 'submit',
         '#value' => t('Delete'),
         '#submit' => array('edoweb_basic_admin_delete'),
-        '#weight' => 200,
     );
 
     $toscience_import_server_name = variable_get('toscience_import_server_name');
-    if ($toscience_import_server_name != '' && $conf = $api->getCrawlerConfiguration($entity)) {
+    if ($toscience_import_server_name != '' && $conf) {
     	$form['actions']['importWS'] = array(
         	'#type' => 'fieldset',
         	'#title' => t('Import Webschnitt'),
@@ -171,7 +190,9 @@ function edoweb_basic_admin_reload( $form , &$form_state ) {
  */
 function edoweb_basic_admin_delete( $form , &$form_state ) {
     $entity = $form_state['values']['basic_entity'];
-    edoweb_basic_delete($entity);
+    $keepWebarchives = $form_state['values']['keepWebarchives'] ? $form_state['values']['keepWebarchives'] : 0;
+    $purge = $form_state['values']['purge'];
+    edoweb_basic_delete($entity, $keepWebarchives, $purge);
     $parents = field_get_items('edoweb_basic', $entity, 'field_edoweb_struct_parent');
     $parent_id = '';
     if (FALSE !== $parents) {
