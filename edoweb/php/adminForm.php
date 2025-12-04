@@ -64,16 +64,24 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         /* falls keine Conf vorhanden noch versuchen, die Conf des Parent zu lesen (für kaputte Webschnitte) */
         $form['actions']['delete']['keepWebarchives']['#attributes'] = array('disabled' => 'disabled');
     }
-    $form['actions']['delete']['purge'] = array(
-       	'#type' => 'checkbox',
+   $form['actions']['delete']['purge'] = array(
+     	'#type' => 'checkbox',
        	'#title' => t('endgültig löschen'),
        	'#name' => 'purge',
        	'#default_value' => FALSE,
     	);
+    if( $entity->bundle() != 'version') {
+        $form['actions']['delete']['purge']['#attributes'] = array('disabled' => 'disabled');
+    }
     $form['actions']['delete']['doDelete'] = array(
         '#type' => 'submit',
         '#value' => t('Delete'),
         '#submit' => array('edoweb_basic_admin_delete'),
+    );
+    $form['actions']['delete']['reactivate'] = array(
+        '#type' => 'submit',
+        '#value' => t('Reaktivieren'),
+        '#submit' => array('edoweb_basic_admin_reactivate'),
     );
 
     $toscience_import_server_name = variable_get('toscience_import_server_name');
@@ -136,13 +144,17 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         	'#type' => 'textfield',
         	'#title' => t('Crawler'),
         	'#name' => 'crawler',
-        	'#default_value' => @$conf['crawlerSelection'];
+        	'#default_value' => @$conf['crawlerSelection'],
     	);
+	$title_html = $api->getTitle($entity->remote_id); // aus File Label oder Titel holen
+	$title_html = preg_replace('/\n/','', $title_html); // remove line breaks
+        $title_text = preg_replace('/^.*<span class="titleMain">(.*?)<\/span>.*$/','$1', $title_html); // convert html to text
+        $default_timestamp = preg_replace('/[\s:\-]/', '', $title_text); //  convert title to timestamp
     	$form['actions']['postVersion']['zeitstempel'] = array(
         	'#type' => 'textfield',
-        	'#title' => t('Zeitstempel im Format yyyyMMddHHmmss'),
+		'#title' => t('Zeitstempel im Format yyyyMMddHHmmss. <br/> Achtung! Es muss ein Webarchiv mit diesem Zeitstempel existieren!'),
         	'#name' => 'zeitstempel',
-        	/* '#default_value' => aus Label / Titel holen */
+                '#default_value' => $default_timestamp,
     	);
     	$form['actions']['postVersion']['doPostVersion'] = array(
         	'#type' => 'submit',
@@ -229,6 +241,16 @@ function edoweb_basic_admin_delete( $form , &$form_state ) {
 }
 
 /**
+ * Form reactivation handler.
+ *
+ */
+function edoweb_basic_admin_reactivate( $form , &$form_state ) {
+    $entity = $form_state['values']['basic_entity'];
+    $api = new EdowebAPIClient();
+    $api->activate($entity);
+}
+
+/**
  * Form transformers handler.
  *
  */
@@ -276,13 +298,11 @@ function edoweb_basic_admin_importws( $form , &$form_state ) {
  * Form Export Webschnitt
  *
  */
-/**
- function edoweb_basic_admin_post_version( $form , &$form_state ) {
-     $entity = $form_state['values']['basic_entity'];
-     # hole PID aus conf.getName() !
-     $crawler = $form_state['values']['crawler'];
-     $zeitstempel = $form_state['values']['zeitstempel'];
-     $api = new EdowebAPIClient();
-     # $api->postVersion($entity, $pid, $crawler, $zeitstempel);
- }
-*/
+function edoweb_basic_admin_post_version( $form , &$form_state ) {
+    $entity = $form_state['values']['basic_entity'];
+    // hole PID aus conf.getName() !
+    $crawler = $form_state['values']['crawler'];
+    $zeitstempel = $form_state['values']['zeitstempel'];
+    $api = new EdowebAPIClient();
+    // $api->postVersion($entity, $pid, $crawler, $zeitstempel);
+}

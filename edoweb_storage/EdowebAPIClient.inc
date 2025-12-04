@@ -250,6 +250,19 @@ class EdowebAPIClient implements EdowebAPIClientInterface
         return $this->_http_delete($http_url);
     }
 
+    /*
+     * Re-activate an entity via the API
+     *
+     * @param $entity The drupal entity to reactivate
+     *
+     */
+    public function activate($entity)
+    {
+        // Re-activate resource
+        $http_url = sprintf('%s/resource/%s/activate', $this->__edoweb_api_host, $entity->remote_id);
+        return $this->_http_post($http_url);
+    }
+
     public function index($entity)
     {
         // Index resource
