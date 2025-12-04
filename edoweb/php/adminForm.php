@@ -61,6 +61,7 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         '#default_value' => FALSE,
     );
     if (! $conf = $api->getCrawlerConfiguration($entity)) {
+        /* falls keine Conf vorhanden noch versuchen, die Conf des Parent zu lesen (für kaputte Webschnitte) */
         $form['actions']['delete']['keepWebarchives']['#attributes'] = array('disabled' => 'disabled');
     }
     $form['actions']['delete']['purge'] = array(
@@ -124,6 +125,30 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         		'#submit' => array('edoweb_basic_admin_importws'),
     		);
     	}
+    }
+    if ($conf) {
+    	$form['actions']['postVersion'] = array(
+        	'#type' => 'fieldset',
+        	'#title' => t('Erzeuge Webschnitt für Zeitstempel'),
+        	'#weight' => 400,
+    	);
+    	$form['actions']['postVersion']['crawler'] = array(
+        	'#type' => 'textfield',
+        	'#title' => t('Crawler'),
+        	'#name' => 'crawler',
+        	'#default_value' => @$conf['crawlerSelection'];
+    	);
+    	$form['actions']['postVersion']['zeitstempel'] = array(
+        	'#type' => 'textfield',
+        	'#title' => t('Zeitstempel im Format yyyyMMddHHmmss'),
+        	'#name' => 'zeitstempel',
+        	/* '#default_value' => aus Label / Titel holen */
+    	);
+    	$form['actions']['postVersion']['doPostVersion'] = array(
+        	'#type' => 'submit',
+        	'#value' => t('Erzeuge Webschnitt'),
+        	'#submit' => array('edoweb_basic_admin_post_version'),
+    	);
     }
 
     $form['transformers'] = array(
@@ -246,3 +271,18 @@ function edoweb_basic_admin_importws( $form , &$form_state ) {
     $api = new EdowebAPIClient();
     $api->importWS($entity, $quellwebpage, $quellwebschnitt, $deleteQuellserverWebschnitt);
 }
+
+/**
+ * Form Export Webschnitt
+ *
+ */
+/**
+ function edoweb_basic_admin_post_version( $form , &$form_state ) {
+     $entity = $form_state['values']['basic_entity'];
+     # hole PID aus conf.getName() !
+     $crawler = $form_state['values']['crawler'];
+     $zeitstempel = $form_state['values']['zeitstempel'];
+     $api = new EdowebAPIClient();
+     # $api->postVersion($entity, $pid, $crawler, $zeitstempel);
+ }
+*/
