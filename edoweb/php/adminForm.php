@@ -60,9 +60,18 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         '#name' => 'keepWebarchives',
         '#default_value' => FALSE,
     );
+    $parents = field_get_items('edoweb_basic', $entity, 'field_edoweb_struct_parent');
+    $parent_id = '';
+    if (FALSE !== $parents) {
+        foreach($parents as $parent) {
+            $parent_id = $parent['value'];
+        }
+    }
     if (! $conf = $api->getCrawlerConfiguration($entity)) {
-        /* falls keine Conf vorhanden noch versuchen, die Conf des Parent zu lesen (für kaputte Webschnitte) */
-        $form['actions']['delete']['keepWebarchives']['#attributes'] = array('disabled' => 'disabled');
+    	if (! $conf = $api->getCrawlerConfigurationById($parent_id)) {
+        	/* falls keine Conf vorhanden noch versuchen, die Conf des Parent zu lesen (für kaputte Webschnitte) */
+        	$form['actions']['delete']['keepWebarchives']['#attributes'] = array('disabled' => 'disabled');
+        }
     }
    $form['actions']['delete']['purge'] = array(
      	'#type' => 'checkbox',
@@ -149,7 +158,7 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
 	$title_html = $api->getTitle($entity->remote_id); // aus File Label oder Titel holen
 	$title_html = preg_replace('/\n/','', $title_html); // remove line breaks
         $title_text = preg_replace('/^.*<span class="titleMain">(.*?)<\/span>.*$/','$1', $title_html); // convert html to text
-        $default_timestamp = preg_replace('/[\s:\-]/', '', $title_text); //  convert title to timestamp
+        $default_timestamp = preg_replace('/[^0-9]/', '', $title_text); //  convert title to timestamp
     	$form['actions']['postVersion']['zeitstempel'] = array(
         	'#type' => 'textfield',
 		'#title' => t('Zeitstempel im Format yyyyMMddHHmmss. <br/> Achtung! Es muss ein Webarchiv mit diesem Zeitstempel existieren!'),
@@ -300,9 +309,22 @@ function edoweb_basic_admin_importws( $form , &$form_state ) {
  */
 function edoweb_basic_admin_post_version( $form , &$form_state ) {
     $entity = $form_state['values']['basic_entity'];
-    // hole PID aus conf.getName() !
+    $parents = field_get_items('edoweb_basic', $entity, 'field_edoweb_struct_parent');
+    $parent_id = '';
+    if (FALSE !== $parents) {
+        foreach($parents as $parent) {
+            $parent_id = $parent['value'];
+        }
+    }
+    $api = new EdowebAPIClient();
+    if (! $conf = $api->getCrawlerConfiguration($entity)) {
+       	/* falls keine Conf vorhanden noch versuchen, die Conf des Parent zu lesen (für kaputte Webschnitte) */
+    	$conf = $api->getCrawlerConfigurationById($parent_id);
+    }
+    $webpage_pid = $conf['name'];
+    $version_pid = '';
     $crawler = $form_state['values']['crawler'];
     $zeitstempel = $form_state['values']['zeitstempel'];
-    $api = new EdowebAPIClient();
-    // $api->postVersion($entity, $pid, $crawler, $zeitstempel);
+    $filename = '';
+    $api->postVersion($entity, $webpage_pid, $version_pid, $crawler, $zeitstempel, $filename);
 }
