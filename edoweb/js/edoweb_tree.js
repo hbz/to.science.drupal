@@ -40,7 +40,7 @@
         window.location.pathname.replace(Drupal.settings.basePath, '').split('/')[1]
       );
 
-      // Das kommt in JEDEM fieldset und ist eigentlich nur EINMAL pro Formular erwünscht
+      // Achtung, das wird in JEDEM fieldset unterhalb von edit-actions erneut eingeblendet.
       $('form#edoweb-basic-admin fieldset#edit-actions div.fieldset-wrapper', context).append(
         $('<input type="submit" id="edit-cut" value="In die Ablage laden" class="form-submit" />')
         .bind('click', {entity_id: Drupal.settings.edoweb.entity}, Drupal.edoweb.cut_item)

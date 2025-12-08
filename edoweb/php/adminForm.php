@@ -49,12 +49,12 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         '#submit' => array('edoweb_basic_admin_index'),
         '#weight' => 50,
     );
-    $form['actions']['delete'] = array(
+    $form['delete'] = array(
         '#type' => 'fieldset',
         '#title' => t('Delete'),
         '#weight' => 200,
     );
-    $form['actions']['delete']['keepWebarchives'] = array(
+    $form['delete']['keepWebarchives'] = array(
         '#type' => 'checkbox',
         '#title' => t('behalte Webarchive'),
         '#name' => 'keepWebarchives',
@@ -70,24 +70,24 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
     if (! $conf = $api->getCrawlerConfiguration($entity)) {
     	if (! $conf = $api->getCrawlerConfigurationById($parent_id)) {
         	/* falls keine Conf vorhanden noch versuchen, die Conf des Parent zu lesen (für kaputte Webschnitte) */
-        	$form['actions']['delete']['keepWebarchives']['#attributes'] = array('disabled' => 'disabled');
+        	$form['delete']['keepWebarchives']['#attributes'] = array('disabled' => 'disabled');
         }
     }
-   $form['actions']['delete']['purge'] = array(
+   $form['delete']['purge'] = array(
      	'#type' => 'checkbox',
        	'#title' => t('endgültig löschen'),
        	'#name' => 'purge',
        	'#default_value' => FALSE,
     	);
     if( $entity->bundle() != 'version') {
-        $form['actions']['delete']['purge']['#attributes'] = array('disabled' => 'disabled');
+        $form['delete']['purge']['#attributes'] = array('disabled' => 'disabled');
     }
-    $form['actions']['delete']['doDelete'] = array(
+    $form['delete']['doDelete'] = array(
         '#type' => 'submit',
         '#value' => t('Delete'),
         '#submit' => array('edoweb_basic_admin_delete'),
     );
-    $form['actions']['delete']['reactivate'] = array(
+    $form['delete']['reactivate'] = array(
         '#type' => 'submit',
         '#value' => t('Reaktivieren'),
         '#submit' => array('edoweb_basic_admin_reactivate'),
@@ -95,28 +95,28 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
 
     $toscience_import_server_name = variable_get('toscience_import_server_name');
     if ($toscience_import_server_name != '' && $conf) {
-    	$form['actions']['importWS'] = array(
+    	$form['importWS'] = array(
         	'#type' => 'fieldset',
         	'#title' => t('Import Webschnitt'),
         	'#weight' => 300,
     	);
-    	$form['actions']['importWS']['quellserver'] = array(
+    	$form['importWS']['quellserver'] = array(
         	'#type' => 'textfield',
         	'#title' => t('Quellserver'),
         	'#name' => 'quellserver',
         	'#attributes' => array('disabled' => 'disabled'),
         	'#default_value' => $toscience_import_server_name
     	);
-    	$form['actions']['importWS']['quellwebpage'] = array(
+    	$form['importWS']['quellwebpage'] = array(
         	'#type' => 'textfield',
         	'#title' => t('Quellserver Website PID'),
         	'#name' => 'quellwebpage',
         	'#default_value' => @$conf['quellserverWebpagePid'] == null ? 'edoweb:NNNN' : @$conf['quellserverWebpagePid'],
     	);
    	if( $entity->bundle() == 'version') {
-        	$form['actions']['importWS']['quellwebpage']['#attributes'] = array('readonly' => 'readonly');
+        	$form['importWS']['quellwebpage']['#attributes'] = array('readonly' => 'readonly');
     	}
-    	$form['actions']['importWS']['quellwebschnitt'] = array(
+    	$form['importWS']['quellwebschnitt'] = array(
         	'#type' => 'textfield',
         	'#title' => t('Quellserver Webschnitt PID'),
         	'#name' => 'quellwebschnitt',
@@ -124,19 +124,19 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         	'#required' => TRUE,
     	);
    	if( $entity->bundle() == 'version') {
-        	$form['actions']['importWS']['quellwebschnitt']['#attributes'] = array('readonly' => 'readonly');
+        	$form['importWS']['quellwebschnitt']['#attributes'] = array('readonly' => 'readonly');
     	}
-	$form['actions']['importWS']['deleteQuellserverWebschnitt'] = array(
+	$form['importWS']['deleteQuellserverWebschnitt'] = array(
         	'#type' => 'checkbox',
         	'#title' => t('Lösche Webschnitt auf Quellserver'),
         	'#name' => 'deleteQuellserverWebschnitt',
         	'#default_value' => @$conf['deleteQuellserverWebschnitt'] == false ? 0 : 1,
     	);
     	if( $entity->bundle() == 'version') {
-        	$form['actions']['importWS']['deleteQuellserverWebschnitt']['#attributes'] = array('disabled' => 'disabled');
+        	$form['importWS']['deleteQuellserverWebschnitt']['#attributes'] = array('disabled' => 'disabled');
     	}   
    	if( $entity->bundle() != 'version') {
-    		$form['actions']['importWS']['doImportWS'] = array(
+    		$form['importWS']['doImportWS'] = array(
         		'#type' => 'submit',
         		'#value' => t('Importiere Webschnitt'),
         		'#submit' => array('edoweb_basic_admin_importws'),
@@ -144,12 +144,12 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
     	}
     }
     if ($conf) {
-    	$form['actions']['postVersion'] = array(
+    	$form['postVersion'] = array(
         	'#type' => 'fieldset',
         	'#title' => t('Erzeuge Webschnitt für Zeitstempel'),
         	'#weight' => 400,
     	);
-    	$form['actions']['postVersion']['crawler'] = array(
+    	$form['postVersion']['crawler'] = array(
         	'#type' => 'textfield',
         	'#title' => t('Crawler'),
         	'#name' => 'crawler',
@@ -159,13 +159,13 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
 	$title_html = preg_replace('/\n/','', $title_html); // remove line breaks
         $title_text = preg_replace('/^.*<span class="titleMain">(.*?)<\/span>.*$/','$1', $title_html); // convert html to text
         $default_timestamp = preg_replace('/[^0-9]/', '', $title_text); //  convert title to timestamp
-    	$form['actions']['postVersion']['zeitstempel'] = array(
+    	$form['postVersion']['zeitstempel'] = array(
         	'#type' => 'textfield',
 		'#title' => t('Zeitstempel im Format yyyyMMddHHmmss. <br/> Achtung! Es muss ein Webarchiv mit diesem Zeitstempel existieren!'),
         	'#name' => 'zeitstempel',
                 '#default_value' => $default_timestamp,
     	);
-    	$form['actions']['postVersion']['doPostVersion'] = array(
+    	$form['postVersion']['doPostVersion'] = array(
         	'#type' => 'submit',
         	'#value' => t('Erzeuge Webschnitt'),
         	'#submit' => array('edoweb_basic_admin_post_version'),
@@ -175,7 +175,7 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
     $form['transformers'] = array(
         '#type' => 'fieldset',
         '#title' => t('Transformers'),
-        '#weight' => 5,
+        '#weight' => 500,
     );
     $transformers = $api->getTransformers($entity);
     $form['transformers']['transformers'] = array(
