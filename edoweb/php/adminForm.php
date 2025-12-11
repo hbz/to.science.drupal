@@ -58,7 +58,7 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         '#type' => 'checkbox',
         '#title' => t('behalte Webarchive'),
         '#name' => 'keepWebarchives',
-        '#default_value' => FALSE,
+        '#default_value' => TRUE,
     );
     $parents = field_get_items('edoweb_basic', $entity, 'field_edoweb_struct_parent');
     $parent_id = '';
