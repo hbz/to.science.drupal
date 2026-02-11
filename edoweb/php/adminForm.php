@@ -73,6 +73,8 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         	$form['delete']['keepWebarchives']['#attributes'] = array('disabled' => 'disabled');
         }
     }
+   // Auf Testrechnern kann diese Zeile entfernt werden:  KS, 11.02.2026
+   $form['delete']['keepWebarchives']['#attributes'] = array('disabled' => 'disabled');
    $form['delete']['purge'] = array(
      	'#type' => 'checkbox',
        	'#title' => t('endgültig löschen'),
