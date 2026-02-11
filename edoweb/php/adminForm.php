@@ -142,6 +142,8 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
         		'#type' => 'submit',
         		'#value' => t('Importiere Webschnitt'),
         		'#submit' => array('edoweb_basic_admin_importws'),
+			// Importieren von Webschnitten deaktiviert, KS 11.02.2026
+                        '#attributes' => array('disabled' => 'disabled'),
     		);
     	}
     }
