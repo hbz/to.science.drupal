@@ -70,6 +70,7 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
     
     $form['domains']['domain00'] = array(
         '#type' => 'textfield',
+        '#maxlength' => 256,
         '#title' => t('1. zusätzliche Domäne'),
         '#default_value' => @$conf['domains'][0],
         '#required' => FALSE,
@@ -80,6 +81,7 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
     for($i = 1; $i < sizeof(@$conf['domains']); $i++) {
         $form['domains'][sprintf('domain%02d', $i)] = array(
             '#type' => 'textfield',
+            '#maxlength' => 256,
             '#title' => t(sprintf('%d. zusätzliche Domäne', $i+1)),
             '#default_value' => @$conf['domains'][$i],
             '#required' => FALSE,
@@ -91,6 +93,7 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
     if( sizeof(@$conf['domains']) > 0 ) {
         $form['domains'][sprintf('domain%02d', sizeof(@$conf['domains']))] = array(
             '#type' => 'textfield',
+            '#maxlength' => 256,
             '#title' => t('Weitere Domäne angeben'),
             '#default_value' => '',
             '#required' => FALSE,
@@ -177,7 +180,7 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
             'ignore' => t('Ignore'),
             'obey' => t('Obey'),
         ),
-        '#default_value' => @$conf['robotsPolicy'] == null ? 'ignore' : @$conf['robotsPolicy'] == 'classic' ? 'ignore' : @$conf['robotsPolicy'],
+        '#default_value' => @$conf['robotsPolicy'] == null ? 'obey' : @$conf['robotsPolicy'] == 'classic' ? 'obey' : @$conf['robotsPolicy'],
         '#required' => TRUE,
         '#weight' => 50,
     );
@@ -267,7 +270,7 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
                 'Googlebot' => t('Google Crawler'),
                 'Toscience' => t('to.science Crawler'),
             ),
-            '#default_value' => @$conf['agentIdSelection'] == null ? 'Chrome' : @$conf['agentIdSelection'],
+            '#default_value' => @$conf['agentIdSelection'] == null ? 'Toscience' : @$conf['agentIdSelection'],
             '#required' => FALSE,
             '#weight' => 65,
         );
@@ -322,8 +325,8 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
             '#type' => 'select',
             '#title' => t('Sekunden zwischen zwei Anfragen an Server'),
             '#options' => $form['time_options']['#value'],
-            '#default_value' => "keine",
-            '#default_value' => @$conf['waitSecBtRequests'] == null ? '0' : @$conf['waitSecBtRequests'] == '0' ? '0' : @$conf['waitSecBtRequests'],
+            '#default_value' => "1",
+            '#default_value' => @$conf['waitSecBtRequests'] == null ? '1' : @$conf['waitSecBtRequests'] == '0' ? '0' : @$conf['waitSecBtRequests'],
             '#weight' => 87,
             '#required' => FALSE,
         );
@@ -391,7 +394,7 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
                 'MB' => t('Megabyte'),
                 'GB' => t('Gigabyte'),
             ),
-            '#default_value' => @$conf['quotaUnitSelection'] == null ? 'Megabyte' : @$conf['quotaUnitSelection'],
+            '#default_value' => @$conf['quotaUnitSelection'] == null ? 'GB' : @$conf['quotaUnitSelection'],
             '#required' => FALSE,
         );
         if( $entity->bundle() == 'version') {
