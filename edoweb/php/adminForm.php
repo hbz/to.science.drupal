@@ -240,7 +240,7 @@ function edoweb_basic_admin_reload( $form , &$form_state ) {
  */
 function edoweb_basic_admin_delete( $form , &$form_state ) {
     $entity = $form_state['values']['basic_entity'];
-    $keepWebarchives = $form_state['values']['keepWebarchives'] ? $form_state['values']['keepWebarchives'] : 0;
+    $keepWebarchives = $form_state['values']['keepWebarchives'] ? $form_state['values']['keepWebarchives'] : TRUE;
     $purge = $form_state['values']['purge'];
     edoweb_basic_delete($entity, $keepWebarchives, $purge);
     $parents = field_get_items('edoweb_basic', $entity, 'field_edoweb_struct_parent');
