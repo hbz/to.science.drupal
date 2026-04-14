@@ -252,7 +252,7 @@ class EdowebAPIClient implements EdowebAPIClientInterface
     public function delete($entity)
     {
         // Delete resource
-        $http_url = sprintf('%s/resource/%s?keepWebarchives=%d&purge=%s', $this->__edoweb_api_host, $entity->remote_id, $entity->keepWebarchives, $entity->purge);
+        $http_url = sprintf('%s/resource/%s?keepWebarchives=%s&purge=%s', $this->__edoweb_api_host, $entity->remote_id, $entity->keepWebarchives, $entity->purge);
         return $this->_http_delete($http_url);
     }
 
@@ -290,6 +290,7 @@ class EdowebAPIClient implements EdowebAPIClientInterface
 
         $results_per_page = variable_get('edoweb_storage_results_per_page', 10);
 
+        if (isset($results->hits))
         pager_default_initialize($results['hits'], $results_per_page, $query_count);
 
         $query_count ++;
