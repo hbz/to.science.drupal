@@ -204,7 +204,7 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
         '#options' => array(
             'heritrix' => t('heritrix'),
             'wpull' => t('wpull'),
-            'browsertrix' => t('browsertrix'),
+            'btrix' => t('browsertrix'),
         ),
         '#default_value' => @$conf['crawlerSelection'] == null ? 'wpull' : @$conf['crawlerSelection'],
         '#required' => FALSE,
@@ -218,7 +218,7 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
     console_log('issetDeepness='.(@$conf['deepness']!==null));
     console_log('deepness='.@$conf['deepness']);
     
-    if( @$conf['crawlerSelection'] == 'wpull' || @$conf['crawlerSelection'] == 'browsertrix' ) {
+    if( @$conf['crawlerSelection'] == 'wpull' || @$conf['crawlerSelection'] == 'btrix' ) {
         
         $form['urlsExcluded'] = array(
             '#type' => 'fieldset',
@@ -461,7 +461,7 @@ function edoweb_basic_crawler_form_submit($form, &$form_state) {
     $conf['robotsPolicy'] = $form_state['values']['robotsPolicy'];
     $conf['notices'] = $form_state['values']['notices'];
     $conf['crawlerSelection'] = $form_state['values']['crawlerSelection'];
-    if( $conf['crawlerSelection'] == 'wpull' || $conf['crawlerSelection'] == 'browsertrix' ) {
+    if( $conf['crawlerSelection'] == 'wpull' || $conf['crawlerSelection'] == 'btrix' ) {
         if( isset($form_state['values']['urlExcluded00']) && $form_state['values']['urlExcluded00'] != '') {
             $conf['urlsExcluded'] = array($form_state['values']['urlExcluded00']);
         }
