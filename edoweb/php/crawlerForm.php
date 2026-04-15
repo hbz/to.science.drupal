@@ -401,7 +401,11 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
         if( $entity->bundle() == 'version') {
             $form['limitCrawlSize']['quotaUnitSelection']['#attributes'] = array('disabled' => 'disabled');
         }
-        
+
+        $form['btrixWorkflowId'] = array(
+            '#type' => 'hidden',
+            '#value' => @$conf['btrixWorkflowId'],
+        );
         
     }
     
@@ -486,6 +490,7 @@ function edoweb_basic_crawler_form_submit($form, &$form_state) {
         if( isset($form_state['values']['waitRetry']) && $form_state['values']['waitRetry'] != '' )
         { $conf['waitRetry'] = $form_state['values']['waitRetry']; }
         else $conf['waitRetry'] = '20';
+        $conf['btrixWorkflowId'] = $form_state['values']['btrixWorkflowId'];
     }
     
     $api->setCrawlerConfiguration($entity, $conf);
