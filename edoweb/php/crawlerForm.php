@@ -490,7 +490,8 @@ function edoweb_basic_crawler_form_submit($form, &$form_state) {
         if( isset($form_state['values']['waitRetry']) && $form_state['values']['waitRetry'] != '' )
         { $conf['waitRetry'] = $form_state['values']['waitRetry']; }
         else $conf['waitRetry'] = '20';
-        $conf['btrixWorkflowId'] = $form_state['values']['btrixWorkflowId'];
+        if( isset($form_state['values']['btrixWorkflowId']) && $form_state['values']['btrixWorkflowId'] != '' )
+        { $conf['btrixWorkflowId'] = $form_state['values']['btrixWorkflowId']; }
     }
     
     $api->setCrawlerConfiguration($entity, $conf);
