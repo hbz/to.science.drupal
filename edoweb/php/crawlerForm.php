@@ -406,6 +406,10 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
             '#type' => 'hidden',
             '#value' => @$conf['btrixWorkflowId'],
         );
+        $form['lastCrawlId'] = array(
+            '#type' => 'hidden',
+            '#value' => @$conf['lastCrawlId'],
+        );
         
     }
     
@@ -492,6 +496,8 @@ function edoweb_basic_crawler_form_submit($form, &$form_state) {
         else $conf['waitRetry'] = '20';
         if( isset($form_state['values']['btrixWorkflowId']) && $form_state['values']['btrixWorkflowId'] != '' )
         { $conf['btrixWorkflowId'] = $form_state['values']['btrixWorkflowId']; }
+        if( isset($form_state['values']['lastCrawlId']) && $form_state['values']['lastCrawlId'] != '' )
+        { $conf['lastCrawlId'] = $form_state['values']['lastCrawlId']; }
     }
     
     $api->setCrawlerConfiguration($entity, $conf);
