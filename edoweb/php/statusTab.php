@@ -66,6 +66,14 @@ function edoweb_basic_status($entity) {
             '#weight' => 999,
         );
         
+        $content['webgatherer']['_lastCrawlSize'] = array(
+            '#prefix' => '<div class="field field-label-above"><div class="field-label">'
+            . t('Last Crawl Size')
+            . ':</div><div class="field-items"><div class="field-item even">',
+            '#suffix' => '</div></div></div>',
+            '#markup' => @$status['webgatherer']['lastCrawlSize'],
+            '#weight' => 999,
+        );
         $content['webgatherer']['_lastLaunch'] = array(
             '#prefix' => '<div class="field field-label-above"><div class="field-label">'
             . t('Last launch')
