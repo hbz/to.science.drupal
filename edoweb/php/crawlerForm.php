@@ -283,7 +283,8 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
             '#type' => 'select',
             '#title' => t('Max. Verzeichnistiefe'),
             '#options' => array(
-                '0' => t('keine'),
+                '-1' => t('standard'),
+                '0',
                 '1',
                 '2',
                 '3',
@@ -294,8 +295,7 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
                 '8',
                 '9',
             ),
-            '#default_value' => "keine",
-            '#default_value' => @$conf['deepness'] == null ? '0' : @$conf['deepness'] == '0' ? '0' : @$conf['deepness'],
+            '#default_value' => @$conf['deepness'] == null ? '0' : @$conf['deepness'],
             '#weight' => 80,
             '#required' => FALSE,
         );
