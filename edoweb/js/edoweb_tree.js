@@ -176,6 +176,7 @@
 
   var UIButtons = [];
 
+  // hier werden die Event Handler gesetzt - das ist der Hauptteil dieser Javascript-Source
   Drupal.edoweb.refreshTree = function () {
     $('.edoweb-tree li[data-curie="' + Drupal.settings.edoweb.entity + '"]')
         .addClass('active').parents('li').removeClass('collapsed').addClass('expanded');
@@ -395,7 +396,11 @@
             var prev = item.prev('li');
             if (prev.length > 0) {
               prev.before(item);
+              // das HTML des gesamten, aktualisierten Baumes in Fedora abspeichern:
+              writeTree(item.parent().closest('li'));
+              // das speichert den SEQ-Datenstrom am Parent neu ab:
               saveStructure(item.parent().closest('li'), function() {$.unblockUI();});
+              // hier werden die event handler gesetzt:
               Drupal.edoweb.refreshTree();
             }
             return false;
@@ -423,6 +428,17 @@
       ordered_children.push(decodeURIComponent($(this).attr('href').split('/').pop()));
     });
     $.post(target_parent_url + '/structure', {'parts': ordered_children}, function(data, textStatus, jqXHR) {
+      if (callback) callback();
+    });
+  }
+
+  var writeTree = function(list_item, callback) {
+    // Das HTML des geänderten Baumes abspeichern TOSDEV-11
+    // root_id = die PID des Journal- oder Monographie-Ojektes:
+    var root_id = $('ul.edoweb-tree').children('li').first().attr('data-curie');
+    var tree_html = $('ul.edoweb-tree').html();
+    var target_parent_url = list_item.find('a:eq(0)').attr('href');
+    $.post(target_parent_url + '/structure', {'root_id': root_id, 'tree_html': tree_html}, function(data, textStatus, jqXHR) {
       if (callback) callback();
     });
   }

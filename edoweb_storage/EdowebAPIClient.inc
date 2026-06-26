@@ -196,6 +196,15 @@ class EdowebAPIClient implements EdowebAPIClientInterface
         }
     }
 
+    public function writeTree($entity, $root_id, $tree_html)
+    {
+        if (isset($root_id)) {
+            // Update resource tree_html
+            $http_url = sprintf('%s/resource/%s/tree', $this->__edoweb_api_host, $root_id);
+            return $this->_http_put($http_url, $request_body = $tree_html, 'text/plain');
+        }
+    }
+
     public function saveResource($entity, $transformers = null)
     {
         $data = array();
