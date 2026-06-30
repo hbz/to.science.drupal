@@ -261,6 +261,7 @@
             }
             insert_position.append(inserted_item);
             $.post(target_struct_url, {'parent_id': target_parent_id}, function(data, textStatus, jqXHR) {
+              writeTree(list_item);
               saveStructure(list_item, function() {$.unblockUI()});
               throbber.remove();
               Drupal.edoweb.refreshTree();
@@ -294,6 +295,7 @@
             }
             insert_position.prepend(inserted_item);
             $.post(target_struct_url, {'parent_id': target_parent_id}, function(data, textStatus, jqXHR) {
+              writeTree(list_item);
               saveStructure(list_item, function() {$.unblockUI()});
               throbber.remove();
               Drupal.edoweb.refreshTree();
@@ -333,6 +335,7 @@
                 }
                 list_item.after(inserted_item);
                 $.post(target_struct_url, {'parent_id': target_parent_id}, function(data, textStatus, jqXHR) {            
+                  writeTree(list_item.parent().closest('li'));
                   saveStructure(list_item.parent().closest('li'), function() {$.unblockUI()});
                   throbber.remove();
                   Drupal.edoweb.refreshTree();
@@ -377,6 +380,7 @@
             var next = item.next('li');
             if (next.length > 0) {
               next.after(item);
+              writeTree(item.parent().closest('li'));
               saveStructure(item.parent().closest('li'), function() {$.unblockUI();});
               Drupal.edoweb.refreshTree();
             }
@@ -437,6 +441,7 @@
     // root_id = die PID des Journal- oder Monographie-Ojektes:
     var root_id = $('ul.edoweb-tree').children('li').first().attr('data-curie');
     var tree_html = $('ul.edoweb-tree').html();
+    console.log("tree_html: ",tree_html);
     var target_parent_url = list_item.find('a:eq(0)').attr('href');
     $.post(target_parent_url + '/structure', {'root_id': root_id, 'tree_html': tree_html}, function(data, textStatus, jqXHR) {
       if (callback) callback();

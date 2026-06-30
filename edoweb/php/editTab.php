@@ -97,6 +97,12 @@ function edoweb_basic_structure($entity) {
         return MENU_ACCESS_DENIED;
     } else { // GET-Methode
         $subtree = _edoweb_build_tree($api->getTree($entity));
+        if ( $subtree['isHtml'] ) {
+          // drupal_set_message("editTab.php: Output is html: " . $subtree['html']);
+          die('<ul class="edoweb-tree">' + $subtree['html'] + '</ul>');
+          }
+        // falls nicht HTML geliefert wurde, nimmt die Drupal-Funktiom theme_item_list ein Rendering nach HTML vor.
+        // drupal_set_message("editTab.php Rendering tree item list array to HTML for curie: " . $subtree['data-curie']);
         die(theme_item_list(array(
             'items' => array($subtree),
             'title' => null,

@@ -90,9 +90,23 @@ class EdowebAPIClient implements EdowebAPIClientInterface
 
     public function getTree($entity)
     {
+	// Zuerst versuchen, abgespeichertes tree/html aus Fedora zu lesen
+        $http_url = sprintf('%s/resource/%s/tree', $this->__edoweb_api_host, $entity->remote_id);
+        $http_response = $this->_http_get($http_url, 'text/html');
+        // drupal_set_message("getTree: code: " . $http_response->code);
+        if (200 == $http_response->code && isset($http_response->data)) {
+          // drupal_set_message("getTree: data: " . $http_response->data);
+          $tree_json = array( "isHtml" => true, "html" => $http_response->data);
+          // drupal_set_message("getTree: tree_json: " . $tree_json);
+          return $tree_json;
+        }
+        // Wenn das nicht geklappt hat, den Baum komplett von der API neu aufbauen lassen
         $http_url = sprintf('%s/resource/%s/all', $this->__edoweb_api_host, $entity->remote_id);
         $http_response = $this->_http_get($http_url, 'application/json');
-        return json_decode($http_response->data, TRUE);
+        // drupal_set_message("getTree: got Tree data from listAllParts endpoint: " . $http_response->data);
+        $tree_json = sprintf('{"isHtml":false,"json":%s}', $http_response->data);
+        // drupal_set_message("getTree: tree_json: " . $tree_json);
+        return json_decode($tree_json, TRUE);
     }
 
     public function getMetadata($entity)
@@ -201,7 +215,7 @@ class EdowebAPIClient implements EdowebAPIClientInterface
         if (isset($root_id)) {
             // Update resource tree_html
             $http_url = sprintf('%s/resource/%s/tree', $this->__edoweb_api_host, $root_id);
-            return $this->_http_put($http_url, $request_body = $tree_html, 'text/plain');
+            return $this->_http_put($http_url, $request_body = $tree_html, $content_type = 'text/plain;charset=utf-8');
         }
     }
 
