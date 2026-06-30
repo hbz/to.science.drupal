@@ -261,7 +261,7 @@
             }
             insert_position.append(inserted_item);
             $.post(target_struct_url, {'parent_id': target_parent_id}, function(data, textStatus, jqXHR) {
-              writeTree(list_item);
+              writeTree(list_item, function() {$.unblockUI();});
               saveStructure(list_item, function() {$.unblockUI()});
               throbber.remove();
               Drupal.edoweb.refreshTree();
@@ -295,7 +295,7 @@
             }
             insert_position.prepend(inserted_item);
             $.post(target_struct_url, {'parent_id': target_parent_id}, function(data, textStatus, jqXHR) {
-              writeTree(list_item);
+              writeTree(list_item, function() {$.unblockUI();});
               saveStructure(list_item, function() {$.unblockUI()});
               throbber.remove();
               Drupal.edoweb.refreshTree();
@@ -335,7 +335,7 @@
                 }
                 list_item.after(inserted_item);
                 $.post(target_struct_url, {'parent_id': target_parent_id}, function(data, textStatus, jqXHR) {            
-                  writeTree(list_item.parent().closest('li'));
+                  writeTree(list_item.parent().closest('li'), function() {$.unblockUI();});
                   saveStructure(list_item.parent().closest('li'), function() {$.unblockUI()});
                   throbber.remove();
                   Drupal.edoweb.refreshTree();
@@ -380,7 +380,7 @@
             var next = item.next('li');
             if (next.length > 0) {
               next.after(item);
-              writeTree(item.parent().closest('li'));
+              writeTree(item.parent().closest('li'), function() {$.unblockUI();});
               saveStructure(item.parent().closest('li'), function() {$.unblockUI();});
               Drupal.edoweb.refreshTree();
             }
@@ -401,7 +401,7 @@
             if (prev.length > 0) {
               prev.before(item);
               // das HTML des gesamten, aktualisierten Baumes in Fedora abspeichern:
-              writeTree(item.parent().closest('li'));
+              writeTree(item.parent().closest('li'), function() {$.unblockUI();});
               // das speichert den SEQ-Datenstrom am Parent neu ab:
               saveStructure(item.parent().closest('li'), function() {$.unblockUI();});
               // hier werden die event handler gesetzt:
@@ -431,9 +431,10 @@
     list.children('ul').children('li').children('a[data-bundle]').each(function() {
       ordered_children.push(decodeURIComponent($(this).attr('href').split('/').pop()));
     });
-    $.post(target_parent_url + '/structure', {'parts': ordered_children}, function(data, textStatus, jqXHR) {
-      if (callback) callback();
-    });
+    // Den SEQ-Datenstrom nicht mehr speichern; die Schreibzugriffe schießen mit denen für den neuen Datenstrom "tree" quer.
+    // $.post(target_parent_url + '/structure', {'parts': ordered_children}, function(data, textStatus, jqXHR) {
+    //   if (callback) callback();
+    // });
   }
 
   var writeTree = function(list_item, callback) {
