@@ -166,6 +166,7 @@
     var url = Drupal.settings.basePath + 'resource/' + entity_id + '/structure';
     $.get(url).onload = function() {
       var data = $(this.responseText);
+      console.log("data: ",data);
       Drupal.attachBehaviors(data);
       var replacement = data.children('ul').children('li');
       target.replaceWith(replacement);
@@ -194,6 +195,7 @@
       button.remove();
     });
     UIButtons = [];
+    // Gibt es eine "ausgeschnittene Entität" = gibt es ein Objekt im Zwischenspeicher ?
     var cut_entity;
     try {
       cut_entity = JSON.parse(localStorage.getItem('cut_entity'));
@@ -201,6 +203,8 @@
       localStorage.removeItem('cut_entity');
     }
     if (cut_entity) {
+      // Darstellung des Baumes mit einer ausgeschnittenen Entität;
+      // es gibt keine Buttons "Ausschneiden", stattdessen gibt es Buttons "Einfügen".
       var entity_id = cut_entity.remote_id;
       var entity_bundle = cut_entity.bundle_type;
       var entity_label = cut_entity.remote_id;
@@ -210,10 +214,18 @@
         Drupal.edoweb.refreshTree();
       });
       Drupal.edoweb.entity_label(clipboard_item.find('span[data-curie]'));
+      // Darstellung der ausgeschnittenen Entität im Zwischenspeicher (Clipboard)
       $('#edoweb-tree-clipboard').html(clipboard_item.append(clipboard_cancel));
-      $('.edoweb-tree a[href="/resource/' + encodeURIComponent(entity_id) + '"]')
-        .addClass('edoweb-tree-cut-item')
-        .closest('li').find('a[data-bundle]').addClass('edoweb-tree-cut-item');
+      // die ausgeschnittene Entität selber wird ausgegraut dargestellt (Klasse 'edoweb-tree-cut-item')
+      // $('.edoweb-tree a[href="/resource/' + encodeURIComponent(entity_id) + '"]')
+      //   .addClass('edoweb-tree-cut-item')
+      //   .closest('li').find('a[data-bundle]').addClass('edoweb-tree-cut-item');
+      // stattdessen stellen wir die ausgeschnittene Entität im Baume gar nicht dar:
+      var list_item = $('.edoweb-tree a[href="/resource/' + encodeURIComponent(entity_id) + '"]');
+      list_item.closest('li').remove();
+      // und wir entfernen die ausgeschnittene Entität aus dem abgespeicherten Baum:
+      // dies für den Fall, dass sie in einen anderen Baum wieder eingefügt werden sollte (dann würde sie sonst hier nicht gelöscht werden).
+      writeTree(list_item.closest('li'), function() {$.unblockUI();});
 
       $('.edoweb-tree li').each(function() {
 
@@ -346,6 +358,8 @@
         }
       });
     } else {
+      // Darstellung des Baumes mit einer ausgeschnittenen Entität;
+      // es gibt Buttons "Ausschneiden"
       $('.edoweb-tree li').each(function() {
         var list_element = $(this);
         var link = list_element.children('a:eq(0)');
