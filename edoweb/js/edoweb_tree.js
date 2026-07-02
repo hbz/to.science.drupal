@@ -162,6 +162,21 @@
     return false;
   }
 
+  // TOSDEV-48; Löschen eines Objektes über das /admin-Formular ("Extras")
+  // => Dieser Event-Handler wird irgendwie nicht mehr ausgeführt, nachdem man "submit" gedrückt hat.
+  Drupal.edoweb.delete_item = function(e) {
+    console.log('Starting delete_item');
+    entity_id = e.data.entity_id;
+    console.log('entity_id: ', entity_id);
+    var list_item = $('.edoweb-tree a[href="/resource/' + encodeURIComponent(entity_id) + '"]');
+    if (list_item.length) {
+      console.log('found list item in tree');
+      list_item.closest('li').hide();
+      writeTree(list_item.closest('li'), function() {$.unblockUI();});
+      Drupal.edoweb.refreshTree();
+      }
+  }
+
   var loadTree = function(entity_id, target, callback) {
     var url = Drupal.settings.basePath + 'resource/' + entity_id + '/structure';
     $.get(url).onload = function() {
@@ -220,7 +235,7 @@
       // $('.edoweb-tree a[href="/resource/' + encodeURIComponent(entity_id) + '"]')
       //   .addClass('edoweb-tree-cut-item')
       //   .closest('li').find('a[data-bundle]').addClass('edoweb-tree-cut-item');
-      // stattdessen stellen wir die ausgeschnittene Entität im Baume gar nicht dar:
+      // stattdessen stellen wir die ausgeschnittene Entität im Baume gar nicht dar, für TOSDEV-49:
       var list_item = $('.edoweb-tree a[href="/resource/' + encodeURIComponent(entity_id) + '"]');
       list_item.closest('li').remove();
       // und wir entfernen die ausgeschnittene Entität aus dem abgespeicherten Baum:
@@ -436,6 +451,28 @@
 
     }
 
+    // ToDo für TOSDEV-48: auf den Lösch-Submit-Button im Reiter "Extras" auch noch einen Event-Handler legen,
+    //  der den selektierten Eintrag aus dem Baum entfernt.
+    // Also auf das Element: <form action="/resource/edoweb%3A<ID>/admin" id="edoweb-basic-admin" /> <input type="submit" id="edit-dodelete"/>
+    // Achtung, nach Wechsel in das /admin Tab muss noch ein refreshTree durchgeführt werden, damit dieser Event Handler gesetzt wird.
+    // das müsste beim Ausführen des /admin - Endpoints (des Frontends) durchgeführt werden.
+    var admin_form = $('form#edoweb-basic-admin');
+    if ( admin_form.length ) {
+        var action_parts = admin_form.attr('action').split('/');
+        var entity_id = decodeURIComponent( action_parts[action_parts.length -2] );
+        console.log('entity_id: ',entity_id);
+        var delete_button = $('input#edit-dodelete');
+        if (delete_button.length) {
+          console.log('Adding action submit delete_item to delete button.');
+          delete_button.bind('submit', {entity_id: entity_id}, Drupal.edoweb.delete_item);
+        }
+    }
+
+    // Auf den Reaktivierungs-Button muss dann aber auch ein entsprechender Event-Handler gelegt werden.
+    // Also auf <input type="submit" id="edit-reactivate" />
+    // Damit dieser funktionieren kann, darf das Objekt aber nicht vollständig aus dem Baum entfernt werden, 
+    // sondern darf nur versteckt werden (hide). (Bisher blieb es im SEQ-Stream enthalten, jetzt versteckt im tree_html-Stream)
+
   }
 
   var saveStructure = function(list_item, callback) {
@@ -445,6 +482,7 @@
     list.children('ul').children('li').children('a[data-bundle]').each(function() {
       ordered_children.push(decodeURIComponent($(this).attr('href').split('/').pop()));
     });
+    // Bei Webpages sollte der SEQ-Datenstrom geschrieben werden und nicht der tree_html ToDo KS20260702 TOSDEV-50
     // Den SEQ-Datenstrom nicht mehr speichern; die Schreibzugriffe schießen mit denen für den neuen Datenstrom "tree" quer.
     // $.post(target_parent_url + '/structure', {'parts': ordered_children}, function(data, textStatus, jqXHR) {
     //   if (callback) callback();
@@ -458,6 +496,7 @@
     var tree_html = $('ul.edoweb-tree').html();
     console.log("tree_html: ",tree_html);
     var target_parent_url = list_item.find('a:eq(0)').attr('href');
+    // Bei Webpages sollte der tree_html-Datenstrom nicht geschrieben werden, sondern der SEQ ToDo KS20260702 TOSDEV-50
     $.post(target_parent_url + '/structure', {'root_id': root_id, 'tree_html': tree_html}, function(data, textStatus, jqXHR) {
       if (callback) callback();
     });
