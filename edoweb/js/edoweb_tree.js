@@ -170,8 +170,22 @@
     console.log('entity_id: ', entity_id);
     var list_item = $('.edoweb-tree a[href="/resource/' + encodeURIComponent(entity_id) + '"]');
     if (list_item.length) {
-      console.log('found list item in tree');
+      console.log('hiding list item in tree');
       list_item.closest('li').hide();
+      writeTree(list_item.closest('li'), function() {$.unblockUI();});
+      Drupal.edoweb.refreshTree();
+      }
+  }
+
+  // TOSDEV-48; Reaktivierung eines Objektes über das /admin-Formular ("Extras")
+  Drupal.edoweb.reactivate_item = function(e) {
+    console.log('Starting reactivate_item');
+    entity_id = e.data.entity_id;
+    console.log('entity_id: ', entity_id);
+    var list_item = $('.edoweb-tree a[href="/resource/' + encodeURIComponent(entity_id) + '"]');
+    if (list_item.length) {
+      console.log('displaying list item in tree');
+      list_item.closest('li').show();
       writeTree(list_item.closest('li'), function() {$.unblockUI();});
       Drupal.edoweb.refreshTree();
       }
@@ -451,7 +465,7 @@
 
     }
 
-    // ToDo für TOSDEV-48: auf den Lösch-Submit-Button im Reiter "Extras" auch noch einen Event-Handler legen,
+    // Für TOSDEV-48: auf den Lösch-Submit-Button im Reiter "Extras" einen Event-Handler legen,
     //  der den selektierten Eintrag aus dem Baum entfernt.
     // Also auf das Element: <form action="/resource/edoweb%3A<ID>/admin" id="edoweb-basic-admin" /> <input type="submit" id="edit-dodelete"/>
     // Achtung, nach Wechsel in das /admin Tab muss noch ein refreshTree durchgeführt werden, damit dieser Event Handler gesetzt wird.
@@ -466,12 +480,14 @@
           console.log('Adding action submit delete_item to delete button.');
           delete_button.bind('submit', {entity_id: entity_id}, Drupal.edoweb.delete_item);
         }
+        // Auf den Reaktivierungs-Button muss dann aber auch ein entsprechender Event-Handler gelegt werden.
+        // Also auf <input type="submit" id="edit-reactivate" />
+        var reactivate_button = $('input#edit-reactivate');
+        if (reactivate_button.length) {
+          console.log('Adding action submit reactivate_item to reactivate button.');
+          reactivate_button.bind('submit', {entity_id: entity_id}, Drupal.edoweb.reactivate_item);
+        }
     }
-
-    // Auf den Reaktivierungs-Button muss dann aber auch ein entsprechender Event-Handler gelegt werden.
-    // Also auf <input type="submit" id="edit-reactivate" />
-    // Damit dieser funktionieren kann, darf das Objekt aber nicht vollständig aus dem Baum entfernt werden, 
-    // sondern darf nur versteckt werden (hide). (Bisher blieb es im SEQ-Stream enthalten, jetzt versteckt im tree_html-Stream)
 
   }
 
