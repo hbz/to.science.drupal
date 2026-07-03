@@ -498,11 +498,15 @@
     list.children('ul').children('li').children('a[data-bundle]').each(function() {
       ordered_children.push(decodeURIComponent($(this).attr('href').split('/').pop()));
     });
-    // Bei Webpages sollte der SEQ-Datenstrom geschrieben werden und nicht der tree_html ToDo KS20260702 TOSDEV-50
-    // Den SEQ-Datenstrom nicht mehr speichern; die Schreibzugriffe schießen mit denen für den neuen Datenstrom "tree" quer.
-    // $.post(target_parent_url + '/structure', {'parts': ordered_children}, function(data, textStatus, jqXHR) {
-    //   if (callback) callback();
-    // });
+    var content_type = $('ul.edoweb-tree').children('li').first().children('a').attr('data-bundle');
+    console.log("content_type: ", content_type);
+    if ( content_type == 'webpage' ) {
+    // Bei Webpages wird der SEQ-Datenstrom geschrieben und nicht der tree_html KS20260702 TOSDEV-50
+    // Beide Datenströme gleichzeitig kann man nicht speichern, weil die Schreibzugriffe in Fedora quer schießen.
+      $.post(target_parent_url + '/structure', {'parts': ordered_children}, function(data, textStatus, jqXHR) {
+        if (callback) callback();
+      });
+    }
   }
 
   var writeTree = function(list_item, callback) {
@@ -512,10 +516,14 @@
     var tree_html = $('ul.edoweb-tree').html();
     console.log("tree_html: ",tree_html);
     var target_parent_url = list_item.find('a:eq(0)').attr('href');
-    // Bei Webpages sollte der tree_html-Datenstrom nicht geschrieben werden, sondern der SEQ ToDo KS20260702 TOSDEV-50
-    $.post(target_parent_url + '/structure', {'root_id': root_id, 'tree_html': tree_html}, function(data, textStatus, jqXHR) {
-      if (callback) callback();
-    });
+    var content_type = $('ul.edoweb-tree').children('li').first().children('a').attr('data-bundle');
+    console.log("content_type: ", content_type);
+    if ( content_type != 'webpage' ) {
+      // Bei Webpages wird der tree_html-Datenstrom nicht geschrieben werden, sondern der SEQ KS20260702 TOSDEV-50
+      $.post(target_parent_url + '/structure', {'root_id': root_id, 'tree_html': tree_html}, function(data, textStatus, jqXHR) {
+        if (callback) callback();
+      });
+    }
   }
 
 })(jQuery);
