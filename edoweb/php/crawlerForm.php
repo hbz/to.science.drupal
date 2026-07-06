@@ -206,7 +206,7 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
             'wpull' => t('wpull'),
             'btrix' => t('browsertrix'),
         ),
-        '#default_value' => @$conf['crawlerSelection'] == null ? 'wpull' : @$conf['crawlerSelection'],
+        '#default_value' => @$conf['crawlerSelection'] == null ? 'wpull' : @$conf['crawlerSelection'] == 'wget' ? 'wpull' : @$conf['crawlerSelection'],
         '#required' => FALSE,
         '#weight' => 60,
     );
@@ -218,7 +218,7 @@ function edoweb_basic_crawler_form($form, &$form_state, $entity) {
     console_log('issetDeepness='.(@$conf['deepness']!==null));
     console_log('deepness='.@$conf['deepness']);
     
-    if( @$conf['crawlerSelection'] == 'wpull' || @$conf['crawlerSelection'] == 'btrix' ) {
+    if( @$conf['crawlerSelection'] == 'wpull' || @$conf['crawlerSelection'] == 'wget' || @$conf['crawlerSelection'] == 'btrix' ) {
         
         $form['urlsExcluded'] = array(
             '#type' => 'fieldset',
