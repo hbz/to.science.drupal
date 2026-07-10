@@ -92,7 +92,7 @@ function edoweb_menu() {
     );
     
     // 'Structure' callback for entities.
-    // Frontend Endpoint Def /structure
+    // Frontend Endpoint Definiton /structure
     $items['resource/%edoweb_basic/structure'] = array(
         'page callback' => 'edoweb_basic_structure', //editTab.php
         'page arguments' => array(1),

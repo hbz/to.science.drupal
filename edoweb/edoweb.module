@@ -574,7 +574,6 @@ function edoweb_block_view($delta = '') {
 	  if ( $subtree['isHtml'] ) {
 	    // drupal_set_message("edoweb.module: Output is html: " . $subtree['html']);
             $block['content'] = '<div class="item-list"><ul class="edoweb-tree">' . $subtree['html'] . '</ul></div>';
-	    // drupal_set_message("edoweb.module: block content: " . $block['content']);
 	    break;
 	  }
 	  // falls nicht HTML geliefert wurde, nimmt die Drupal-Funktiom theme_item_list ein Rendering nach HTML vor.
@@ -585,7 +584,6 @@ function edoweb_block_view($delta = '') {
             'type' => 'ul',
             'attributes' => array('class' => array('edoweb-tree')),
           ));
-	  // drupal_set_message("edoweb.module: block content: " . $block['content']);
         }
       }
       break;
