@@ -21,6 +21,13 @@
 
 	Drupal.behaviors.edoweb_edit = {
 		attach: function(context, settings) {
+			function formsUrl(path) {
+				var url = Drupal.settings.edoweb.formsServiceUrl + path;
+				url += (url.indexOf('?') === -1 ? '?' : '&') + 'drupalUserId='
+						+ encodeURIComponent(Drupal.settings.edoweb.formsV2UserId);
+				url += '&drupalToken=' + encodeURIComponent(Drupal.settings.edoweb.formsV2Token);
+				return url;
+			}
 			
 			// add missing classes to <a> in menu tabs
 			$('.tabs a[href$="/access"]').addClass('access');
@@ -38,16 +45,16 @@
 					emimin =1;
 				})
 				
-				if(bundle == 'article' || 'researchData'){
-					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/'+ bundle +'/'+ resourceId);
+				if(bundle == 'article' || bundle == 'researchData'){
+					$('.edit').attr('href', formsUrl('/'+ bundle +'/'+ resourceId));
 				}
 				
 				if(bundle == 'monograph'){
-					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/monograph/');
+					$('.edit').attr('href', formsUrl('/monograph/'));
 				}
 				
 				if(emimin >= 1){
-					$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl +'/ktbldata/' + resourceId);	
+					$('.edit').attr('href', formsUrl('/ktbldata/' + resourceId));
 				}
 				
 				
@@ -123,7 +130,7 @@
 					var field = createField(instance);
 					if (bundle == 'researchData' || bundle == 'article' || bundle == 'monograph' || bundle == 'journal' || bundle == 'webpage') {
 						// Drupal.zettel.useZettel(bundle, entity, context);
-						$('.edit').attr('href', Drupal.settings.edoweb.formsServiceUrl + "/" + bundle + "/" + resourceId);
+						$('.edit').attr('href', formsUrl("/" + bundle + "/" + resourceId));
 
 					} else {
 						activateFields(field, bundle, context);

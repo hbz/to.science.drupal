@@ -95,6 +95,8 @@ function edoweb_init() {
       'thumbyServiceUrl' => variable_get('edoweb_thumby_url'),
       'zettelServiceUrl' => variable_get('edoweb_zettel_url'),	
       'formsServiceUrl' => variable_get('edoweb_forms_url'),
+      'formsV2UserId' => $user->uid,
+      'formsV2Token' => _edoweb_forms_v2_signature($user->uid),
     );
     drupal_add_js(array('edoweb' => $settings), 'setting');
     drupal_add_js(
@@ -315,6 +317,10 @@ function edoweb_field_extra_fields() {
  * Provides a wrapper on the edit form to add a new entity.
  */
 function edoweb_basic_add($bundle_type, $parent = NULL) {
+  $forms_v2_path = _edoweb_forms_v2_path($bundle_type);
+  if (NULL === $parent && NULL !== $forms_v2_path) {
+    drupal_goto(_edoweb_forms_v2_url($forms_v2_path));
+  }
   // Create a basic entity structure to be used and passed to the validation
   // and submission functions.
   $entity = entity_get_controller('edoweb_basic')->create(
@@ -679,6 +685,104 @@ function _edoweb_link_lastmodified($entity) {
 function _edoweb_compact_view($entity) {
   $entity_view = edoweb_basic_view($entity, 'compact');
   return drupal_render($entity_view);
+}
+
+function _edoweb_forms_v2_signature($uid) {
+  return drupal_hmac_base64('forms-v2-resource:' . $uid, drupal_get_private_key() . drupal_get_hash_salt());
+}
+
+function _edoweb_forms_v2_valid_signature($uid, $signature) {
+  return is_string($signature) && _edoweb_forms_v2_signature($uid) === $signature;
+}
+
+function _edoweb_forms_v2_url($path, $uid = NULL) {
+  global $user;
+  if (NULL === $uid) {
+    $uid = $user->uid;
+  }
+  $base_url = rtrim(variable_get('edoweb_forms_url'), '/');
+  $query = http_build_query(array(
+    'drupalUserId' => $uid,
+    'drupalToken' => _edoweb_forms_v2_signature($uid),
+  ));
+  return $base_url . $path . '?' . $query;
+}
+
+function _edoweb_forms_v2_path($bundle_type) {
+  $paths = array(
+    'article' => '/article/',
+    'researchData' => '/researchdata/',
+    'ktblData' => '/ktbldata/',
+    'monograph' => '/monograph/',
+  );
+  return isset($paths[$bundle_type]) ? $paths[$bundle_type] : NULL;
+}
+
+function _edoweb_forms_v2_start($bundle_type) {
+  $forms_v2_path = _edoweb_forms_v2_path($bundle_type);
+  if (NULL === $forms_v2_path) {
+    return drupal_not_found();
+  }
+  drupal_goto(_edoweb_forms_v2_url($forms_v2_path));
+}
+function _edoweb_forms_v2_create_resource() {
+  if ('POST' != $_SERVER['REQUEST_METHOD']) {
+    drupal_add_http_header('Status', '405 Method Not Allowed');
+    return drupal_json_output(array('error' => 'Only POST is allowed.'));
+  }
+
+  $data = json_decode(file_get_contents('php://input'), TRUE);
+  if (!is_array($data)) {
+    drupal_add_http_header('Status', '400 Bad Request');
+    return drupal_json_output(array('error' => 'Invalid JSON payload.'));
+  }
+
+  $uid = isset($_SERVER['HTTP_X_DRUPAL_USER_ID']) ? $_SERVER['HTTP_X_DRUPAL_USER_ID'] : '';
+  $signature = isset($_SERVER['HTTP_X_DRUPAL_FORMS_TOKEN']) ? $_SERVER['HTTP_X_DRUPAL_FORMS_TOKEN'] : '';
+  if (!ctype_digit((string) $uid) || !_edoweb_forms_v2_valid_signature($uid, $signature)) {
+    drupal_add_http_header('Status', '403 Forbidden');
+    return drupal_json_output(array('error' => 'Invalid forms.v2 Drupal context.'));
+  }
+
+  $account = user_load($uid);
+  if (!$account || !user_access('create edoweb_basic entities', $account)) {
+    drupal_add_http_header('Status', '403 Forbidden');
+    return drupal_json_output(array('error' => 'Access denied.'));
+  }
+
+  if (!isset($data['isDescribedBy']) || !is_array($data['isDescribedBy'])) {
+    $data['isDescribedBy'] = array();
+  }
+  $data['isDescribedBy']['createdBy'] = $uid;
+
+  $namespace = variable_get('edoweb_api_namespace');
+  $http_url = variable_get('edoweb_api_host') . '/resource/' . $namespace;
+  $http_options = array(
+    'method' => 'POST',
+    'data' => json_encode($data),
+    'headers' => array(
+      'Content-Type' => 'application/json',
+    ),
+  );
+
+  global $user;
+  $original_user = $user;
+  $user = $account;
+  $http_response = _edoweb_http_request($http_url, $http_options);
+  $user = $original_user;
+  if (isset($http_response->error)) {
+    drupal_add_http_header('Status', isset($http_response->code) ? $http_response->code : '500');
+    return drupal_json_output(array('error' => $http_response->error));
+  }
+
+  if (isset($http_response->code) && $http_response->code >= 400) {
+    drupal_add_http_header('Status', $http_response->code);
+    return drupal_json_output(array('error' => $http_response->data));
+  }
+
+  $location = isset($http_response->headers['location']) ? $http_response->headers['location'] : '';
+  $pid = $location ? substr($location, strrpos($location, '/') + 1) : '';
+  return drupal_json_output(array('pid' => $pid, 'location' => $location));
 }
 
 function _edoweb_http_request($request_url, $http_options) {

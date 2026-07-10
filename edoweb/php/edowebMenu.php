@@ -127,6 +127,20 @@ function edoweb_menu() {
         'type' => MENU_LOCAL_TASK,
     );
     
+    // Start forms.v2 through Drupal so the current user can be signed.
+    $items['edoweb/forms-v2/start/%'] = array(
+        'page callback' => '_edoweb_forms_v2_start',
+        'page arguments' => array(3),
+        'access arguments' => array('create edoweb_basic entities'),
+        'type' => MENU_CALLBACK,
+    );
+    // JSON create proxy for forms.v2. Drupal owns the user session.
+    $items['edoweb/forms-v2/resource'] = array(
+        'page callback' => '_edoweb_forms_v2_create_resource',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+
     // GND Autocompletion
     $items['edoweb/autocomplete'] = array(
         'page callback' => '_edoweb_autocomplete', //edoweb.module
