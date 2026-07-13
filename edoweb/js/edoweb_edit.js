@@ -46,7 +46,7 @@
 				})
 				
 				if(bundle == 'article' || bundle == 'researchData'){
-					$('.edit').attr('href', formsUrl('/'+ bundle +'/'+ resourceId));
+					$('.edit').attr('href', formsUrl('/'+ formsPath(bundle) +'/'+ resourceId));
 				}
 				
 				if(bundle == 'monograph'){
@@ -130,7 +130,7 @@
 					var field = createField(instance);
 					if (bundle == 'researchData' || bundle == 'article' || bundle == 'monograph' || bundle == 'journal' || bundle == 'webpage') {
 						// Drupal.zettel.useZettel(bundle, entity, context);
-						$('.edit').attr('href', formsUrl("/" + bundle + "/" + resourceId));
+						$('.edit').attr('href', formsUrl("/" + formsPath(bundle) + "/" + resourceId));
 
 					} else {
 						activateFields(field, bundle, context);
@@ -733,6 +733,16 @@
 			}
 		});
 		Drupal.edoweb.pending_requests.push(request);
+	}
+	
+	function formsPath(bundle) {
+		if (bundle == 'researchData') {
+			return 'researchdata';
+		}
+		if (bundle == 'ktblData') {
+			return 'ktbldata';
+		}
+		return bundle;
 	}
 
 })(jQuery);
