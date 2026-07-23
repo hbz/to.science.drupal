@@ -56,7 +56,7 @@
       if (Drupal.settings.actionAccess) {
         findTargetBundles($('.edoweb-tree>li>a', context).attr('data-bundle'), function(bundle) {
 		// According to Lara(ZBMED), Show only file(Neue Datei) in tree add menu
-		if(bundle!='file') return ;
+		if(bundle!='file' && bundle!='part') return ;
           var link = $('<a />')
             .attr('href', Drupal.settings.basePath + 'resource/add/' + target_bundle)
             .attr('data-bundle', target_bundle)
