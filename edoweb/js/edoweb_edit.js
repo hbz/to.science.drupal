@@ -50,7 +50,7 @@
 				}
 				
 				if(bundle == 'monograph'){
-					$('.edit').attr('href', formsUrl('/monograph/'));
+					$('.edit').attr('href', formsUrl('/monograph/' + resourceId));
 				}
 				
 				if(emimin >= 1){
