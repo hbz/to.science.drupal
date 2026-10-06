@@ -308,8 +308,9 @@ function edoweb_basic_list_entities(EntityFieldQuery $efq, $operations = array()
                         }
                         $remove_facet_link = $title . l(t(' [x]'), current_path(), array('query' => $params));
                         $content['filters'][$jsonld_property]['#items'][] = $remove_facet_link;
-                    } else if (!$is_user || ($is_user && $user->uid == $facet_entity_uri)
-                        || in_array('edoweb_backend_admin', $user->roles)) {
+                    # } else if (!$is_user || ($is_user && $user->uid == $facet_entity_uri)
+                    #    || in_array('edoweb_backend_admin', $user->roles)) {
+		} else {
                             $params = drupal_get_query_parameters();
                             if (isset($params['page'])) {
                                 unset($params['page']);
