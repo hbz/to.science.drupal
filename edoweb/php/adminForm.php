@@ -150,7 +150,7 @@ function edoweb_basic_admin($form, &$form_state, $entity) {
     		);
     	}
     }
-    if ($conf) {
+    if( ( $entity->bundle() == 'webpage' || $entity->bundle() == 'version' ) && $conf ) {
     	$form['postVersion'] = array(
         	'#type' => 'fieldset',
         	'#title' => t('Erzeuge Webschnitt für Zeitstempel'),
@@ -243,7 +243,7 @@ function edoweb_basic_admin_reload( $form , &$form_state ) {
  */
 function edoweb_basic_admin_delete( $form , &$form_state ) {
     $entity = $form_state['values']['basic_entity'];
-    $keepWebarchives = $form_state['values']['keepWebarchives'];
+    $keepWebarchives = isset($form_state['values']['keepWebarchives']) ? $form_state['values']['keepWebarchives'] : TRUE;
     // drupal_set_message('keepWebarchives='.$keepWebarchives);
     $purge = $form_state['values']['purge'];
     // drupal_set_message('purge='.$purge);
