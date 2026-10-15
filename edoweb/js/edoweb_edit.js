@@ -28,6 +28,32 @@
 				url += '&drupalToken=' + encodeURIComponent(Drupal.settings.edoweb.formsV2Token);
 				return url;
 			}
+
+			function currentFormsEditUrl(href) {
+				var bundle = $('.edoweb.entity.default').attr('data-entity-bundle') || Drupal.settings.edoweb.currentFormsBundle;
+				var resourceId = $('.table').attr('resource') || Drupal.settings.edoweb.currentFormsResource;
+				var match = href && href.match(/\/resource\/([^\/]+)\/edit(?:\?|$)/);
+				if (!resourceId && match) {
+					resourceId = decodeURIComponent(match[1]);
+				}
+				if ($('tr.ktbl').length) {
+					bundle = 'ktblData';
+				}
+				if (['article', 'researchData', 'ktblData', 'monograph'].indexOf(bundle) === -1) {
+					Drupal.settings.edoweb.currentFormsBundle = null;
+					return null;
+				}
+				if (bundle) {
+					Drupal.settings.edoweb.currentFormsBundle = bundle;
+				}
+				if (resourceId) {
+					Drupal.settings.edoweb.currentFormsResource = resourceId;
+				}
+				if (!bundle || !resourceId) {
+					return null;
+				}
+				return formsUrl('/' + formsPath(bundle) + '/' + resourceId);
+			}
 			
 			// add missing classes to <a> in menu tabs
 			$('.tabs a[href$="/access"]').addClass('access');
@@ -37,23 +63,17 @@
 			
 			// replace formsUrl for integrate new forms
 			$('#main', context).each(function(){
-				
-				var bundle = $('.edoweb.entity.default').attr('data-entity-bundle');
-				var resourceId = $('.table').attr('resource');				
+				var resourceId = $('.table').attr('resource') || Drupal.settings.edoweb.currentFormsResource;				
 				var emimin = 0;
 				$('tr.ktbl', context).each(function(){
 					emimin =1;
 				})
 				
-				if(bundle == 'article' || bundle == 'researchData'){
-					$('.edit').attr('href', formsUrl('/'+ formsPath(bundle) +'/'+ resourceId));
+				var editUrl = currentFormsEditUrl();
+				if (editUrl) {
+					$('.edit').attr('href', editUrl);
 				}
-				
-				if(bundle == 'monograph'){
-					$('.edit').attr('href', formsUrl('/monograph/' + resourceId));
-				}
-				
-				if(emimin >= 1){
+				if(emimin >= 1 && resourceId){
 					$('.edit').attr('href', formsUrl('/ktbldata/' + resourceId));
 				}
 				
@@ -87,6 +107,17 @@
 
 			$('.tabs a', context).bind('click', function() {
 				var href = $(this).attr('href');
+				if ($(this).hasClass('edit') || /\/resource\/[^\/]+\/edit(?:\?|$)/.test(href)) {
+					var editUrl = currentFormsEditUrl(href);
+					if (editUrl) {
+						window.location.href = editUrl;
+						return false;
+					}
+				}
+				if (href.indexOf(Drupal.settings.edoweb.formsServiceUrl) === 0) {
+					window.location.href = href;
+					return false;
+				}
 				history.pushState({ tree: true }, null, href);
 				Drupal.edoweb.navigateTo(href);
 				if (href.endsWith("edit")) {
