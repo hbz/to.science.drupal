@@ -136,7 +136,7 @@ function edoweb_basic_entity_table($header, $entities, $operations = array(), $t
                                 // https://www.drupal.org/node/1824820
                                 if ($is_ref) {
                                     $field_value = field_view_value(
-                                        EDOWEB_ENTITY_TYPE, $entity, $property, array('value' => $value['value'])
+                                        EDOWEB_ENTITY_TYPE, $entity, $property, array('value' => $value['value'], 'label' => $value['label'])
                                         );
                                 } else {
                                     $field_value = field_view_value(
