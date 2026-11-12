@@ -243,7 +243,11 @@ function edoweb_basic_admin_reload( $form , &$form_state ) {
  */
 function edoweb_basic_admin_delete( $form , &$form_state ) {
     $entity = $form_state['values']['basic_entity'];
-    $keepWebarchives = isset($form_state['values']['keepWebarchives']) ? $form_state['values']['keepWebarchives'] : TRUE;
+    if ( $form['delete']['keepWebarchives']['#attributes'] == array('disabled' => 'disabled') ) {
+        $keepWebarchives = TRUE;
+    } else {
+        $keepWebarchives = $form_state['values']['keepWebarchives'];
+    }
     // drupal_set_message('keepWebarchives='.$keepWebarchives);
     $purge = $form_state['values']['purge'];
     // drupal_set_message('purge='.$purge);
