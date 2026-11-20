@@ -243,10 +243,11 @@ function edoweb_basic_admin_reload( $form , &$form_state ) {
  */
 function edoweb_basic_admin_delete( $form , &$form_state ) {
     $entity = $form_state['values']['basic_entity'];
-    if ( $form['delete']['keepWebarchives']['#attributes'] == array('disabled' => 'disabled') ) {
-        $keepWebarchives = TRUE;
-    } else {
-        $keepWebarchives = $form_state['values']['keepWebarchives'];
+    $keepWebarchives = TRUE;
+    if( $entity->bundle() == 'webpage' || $entity->bundle() == 'version' ) {
+        if ( $form['delete']['keepWebarchives']['#attributes'] != array('disabled' => 'disabled') ) {
+            $keepWebarchives = $form_state['values']['keepWebarchives'];
+        }
     }
     // drupal_set_message('keepWebarchives='.$keepWebarchives);
     $purge = $form_state['values']['purge'];
